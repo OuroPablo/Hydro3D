@@ -11,7 +11,7 @@ channel 0.41667 		     Keyword, Ubulk
 30 2 1                       multigrid maximum iteration per time step,restriction iter, prolongation iter
 F  0.005 			     Fixed (T) or Variable (F) time step, dt
 25 0.8               	     sweeps,safety_factor (CFL)
-400 F F 100                Total number Iterations,Restart,Reinitiate mean values,n_out
+400 F F 200                Total number Iterations,Restart,Reinitiate mean values,n_out
 20 1.0E-6 5 5 5 20           niter,eps,nswp(1),nswp(2),nswp(3),nswp(4)
 =======================Flow boundary conditions=========================
 1			     	     West   (1= Inflow; 12=1/7th power law; 7=prescribed inflow; 8=SEM)
