@@ -1,0 +1,14 @@
+8   number of domains
+== CPU number, Local Mesh Refinement level,xini,xend,yini,yend,zini,zend===========
+0	1	0.0	0.5	0.0	0.5	0.0	0.5
+1	1	0.5	1.0	0.0	0.5	0.0	0.5
+2	1	0.0	0.5	0.5	1.0	0.0	0.5
+3	1	0.5	1.0	0.5	1.0	0.0	0.5
+4	1	0.0	0.5	0.0	0.5	0.5	1.0
+5	1	0.5	1.0	0.0	0.5	0.5	1.0
+6	1	0.0	0.5	0.5	1.0	0.5	1.0
+7	1	0.5	1.0	0.5	1.0	0.5	1.0
+===============================================================================
+2			number of divisions in i
+2		number of divisions in j
+2		number of divisions in k 
