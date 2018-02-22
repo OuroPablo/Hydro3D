@@ -273,6 +273,9 @@
                  dom(ib)%vstar(i,j,k)=(dom(ib)%vstar(i,j,k)+
      & dt*alfapr*diff)
 
+                 if (pressureforce_y) dom(ib)%vstar(i,j,k)=
+     & dom(ib)%vstar(i,j,k)+dt*alfapr*forcn_y
+
               end do
            end do
         end do
@@ -299,6 +302,9 @@
  
                  dom(ib)%wstar(i,j,k)=(dom(ib)%wstar(i,j,k)+
      & dt*alfapr*diff) 
+
+                 if (pressureforce_z) dom(ib)%wstar(i,j,k)=
+     & dom(ib)%wstar(i,j,k)+dt*alfapr*forcn_z
 
               end do
            end do
@@ -687,6 +693,20 @@
           dom(ib)%vstar(i,j,k)=dom(ib)%vstar(i,j,k)+dt*alfapr*gry
         end if
 
+        if (pressureforce_y) then				!Pablo 03/2018
+	    if (L_LSM) then
+	      if (dom(ib)%phi(i,j,k) .ge. 0.0) then
+ 	       dom(ib)%vstar(i,j,k)=dom(ib)%vstar(i,j,k)+dt*alfapr*forcn_y
+	      endif
+	    else if (L_LSMbase) then
+		if (dom(ib)%zc(k).le.length) then
+ 	       dom(ib)%vstar(i,j,k)=dom(ib)%vstar(i,j,k)+dt*alfapr*forcn_y
+		endif
+	    else
+ 	       dom(ib)%vstar(i,j,k)=dom(ib)%vstar(i,j,k)+dt*alfapr*forcn_y
+	    endif
+	  endif
+
               end do
            end do
         end do
@@ -726,6 +746,20 @@
       dom(ib)%wstar(i,j,k)=dom(ib)%wstar(i,j,k)+dt*alfapr*grz*
      & cos(atan(slope))
         end if
+
+        if (pressureforce_z) then
+	    if (L_LSM) then
+	      if (dom(ib)%phi(i,j,k) .ge. 0.0) then
+ 	       dom(ib)%wstar(i,j,k)=dom(ib)%wstar(i,j,k)+dt*alfapr*forcn_z
+	      endif
+	    else if (L_LSMbase) then
+		if (dom(ib)%zc(k).le.length) then
+ 	       dom(ib)%wstar(i,j,k)=dom(ib)%wstar(i,j,k)+dt*alfapr*forcn_z
+		endif
+	    else
+ 	       dom(ib)%wstar(i,j,k)=dom(ib)%wstar(i,j,k)+dt*alfapr*forcn_z
+	    endif
+	  endif
 
               end do
            end do

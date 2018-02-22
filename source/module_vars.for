@@ -3,7 +3,8 @@
 !##########################################################################
 	  SAVE
         double precision g_dx,g_dy,g_dz,dens,Re,eps,fac,Pr,beta,Th,Tc 
-        double precision qzero,qstpn,forcn,Sc_t
+        double precision qzero,qstpn,qstpn_y,qstpn_z
+        double precision Sc_t,forcn,forcn_y,forcn_z
         double precision flomas,rmax,alfapr,resor,fric
         double precision ctime,dt,dtavg,dtsum,safety_factor,noise,Mdef
         double precision t_start_averaging1,t_start_averaging2,ubulk
@@ -11,7 +12,7 @@
         integer alfabc,niter,nswp(4),nsweep,iter,nsweeps,ntime
         integer ngg,nge,ngc,n_unstpt,OMP_threads,iaddinlet,ireadinlet
         integer ngrid_input,ngrd_gl,maxcy,iproln,irestr
-        integer itmax,sweeps,numfile,numfile1,numfile2
+        integer itmax,sweeps,numfile,numfile1,numfile2,numfile4,numfile5
         integer conv_sch,diff_sch,sgs_model,solver,mg_itrsch
         integer bc_w,bc_e,bc_s,bc_n,bc_b,bc_t,UPROF_SEM
         integer Tbc_w,Tbc_e,Tbc_s,Tbc_n,Tbc_b,Tbc_t
@@ -20,7 +21,8 @@
 	  integer pl,pl_ex,differencing,LMR,normal_inter,order
         character*80 keyword,L_n
 	  logical :: LRESTART,LIMB,SGS,PERIODIC,LENERGY,LROUGH
-	  logical :: pressureforce,time_averaging,reinitmean
+	  logical :: pressureforce,pressureforce_y,pressureforce_z
+	  logical :: time_averaging,reinitmean
 	  logical :: LPT,save_inflow,read_inflow,L_dt,LSCALAR
 	  logical :: LTECP,LTECBIN,LTURB,LINST,LPLAN,variTS
 !====================   SEM variables read in control.cin

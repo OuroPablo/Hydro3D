@@ -83,12 +83,20 @@
 
 	if (trim(L_n).eq.'n') fric=fric**0.33
 
-        if(bc_w.eq.5 .or. bc_e.eq.5 .or.
-     & bc_s.eq.5 .or. bc_n.eq.5 .or.
-     & bc_b.eq.5 .or. bc_t.eq.5) then
-           PERIODIC=.true. ; pressureforce=.true.
-        else
-           PERIODIC=.false. ; pressureforce=.false.
+!Pressure forcing for periodic conditions: PABLO 02/2018
+            PERIODIC=.false. ; pressureforce=.false.
+		pressureforce_y=.false. ; pressureforce_z=.false. 
+
+        if(bc_w.eq.5 .or. bc_e.eq.5) then
+           PERIODIC=.true.  ; pressureforce=.true.
+        end if
+
+        if(bc_s.eq.5 .or. bc_n.eq.5) then
+           PERIODIC=.true.  ;  pressureforce_y=.true.
+        end if
+
+        if(bc_t.eq.5 .or. bc_b.eq.5)  then
+           PERIODIC=.true.  ; pressureforce_z=.true.
         end if
 
 	 dtinit=dt
@@ -674,8 +682,20 @@
 
               qzero=ubulk 
               open (unit=700, file='final_ctime.dat')
-              read (700,'(i8,3F15.6)') ntime,ctime,forcn,qstpn
+               read (700,'(i8,3F15.6)') ntime,ctime,forcn,qstpn
               close (700)
+
+	     if(pressureforce_y .eq. .true.) then				!PABLO 02/18
+              open (unit=700, file='forcn_y.dat')
+               read (700,'(4F15.6)') dum,forcn_y,qstpn_y,dum
+              close (700)
+		endif
+
+	     if(pressureforce_z .eq. .true.) then
+              open (unit=700, file='forcn_z.dat')
+               read (700,'(4F15.6)') dum,forcn_z,qstpn_z,dum
+              close (700)
+		endif
 
               write(chb1,'(i4)') dom_id(ib)
               sn=len(trim(adjustl(chb1)))
@@ -785,9 +805,9 @@
               end if
            else
 
-              qzero=ubulk 								!brunho2014
-              qstpn=qzero
-              forcn=2.0/(Re*qzero)
+              qzero=ubulk 								
+              qstpn=qzero ; qstpn_y=0.d0 ;  qstpn_z=0.d0 			!Pablo 02/2018
+	        forcn=2.0/(Re*qzero) ; forcn_y = 0.d0 ; forcn_z=0.d0
               ctime=0.D0
               ntime=0
 
@@ -1070,10 +1090,8 @@
 
           IF (dom(ib)%bc_west.eq.17.or. 
      &  (dom(ib)%bc_west.eq.8 .and. UPROF.eq.17)) THEN
-           do i = 1,tti  !dom(ib)%isu-1,dom(ib)%ieu+1 
-		do j = 1,ttj   !dom(ib)%jsu-1,dom(ib)%jeu+1
-		 do k = 1,ttk! dom(ib)%ksu-1,dom(ib)%keu+1
- 			ufric=0.103594d0*ubulk+0.00568d0
+           do i = 1,tti ; do j = 1,ttj  ; do k = 1,ttk
+ 		ufric=0.103594d0*ubulk+0.00568d0 !Fit of a power law distribution
                  dom(ib)%u(i,j,k)=ufric*
      &  (1.d0/0.41d0*LOG(ABS(dom(ib)%zc(k))*ufric*10**6))/LOG(10.0d0)
 

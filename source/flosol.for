@@ -32,19 +32,26 @@
         if (LRESTART.eq..false.) cnt_pt = 1 
 
         numfile1=1002; numfile2=1003; numfile3=1004
+	  numfile4=1005; numfile5=1006
         if(myrank.eq.0) then
            if (pressureforce) then
-              open (unit=numfile1, file='forcn.dat')
-              write (numfile1,*)
-     & 'variables="time","forcn","qsttp","flwsum"'
+            open (unit=numfile1, file='forcn.dat')
+            write (numfile1,*)'variables=time,forcn,qsttp,flwsum'
            end if
+           if (pressureforce_y) then
+            open (unit=numfile4, file='forcn_y.dat')
+            write (numfile4,*)'variables=time,forcn_y,qsttp_y,flwsum_y,'
+           end if
+           if (pressureforce_z) then
+            open (unit=numfile5, file='forcn_z.dat')
+            write (numfile5,*)'variables=time,forcn_z,qsttp_z,flwsum_z,'
+           end if
+
            open (unit=numfile2, file='rms.dat')
-           write (numfile2,*)
-     & 'variables="iter","time","rmax","dt","Mdef"'
+           write (numfile2,*)'variables=iter,time,rmax,dt,Mdef'
            if (L_LSM) then
-              open (unit=numfile3, file='normV.dat')
-              write (numfile3,*)
-     & 'variables="ntime","normV","steps","ctime","dt"'
+            open (unit=numfile3, file='normV.dat')
+            write (numfile3,*)'variables=ntime,normV,steps,ctime,dt'
 	     end if
         end if
 

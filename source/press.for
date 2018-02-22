@@ -209,20 +209,26 @@
         use mpi
         use multidata
         implicit none
-        integer i,j,k,ib,isp,jspr,jepr,kspr,kepr,ispr,iepr
-        double precision qstpp,fakfor,flwsum_loc,flwsum,A_loc,A
+        integer i,j,k,ib,isp,jsp,ksp,jspr,jepr,kspr,kepr,ispr,iepr
+        double precision ::  qstpp,fakfor,flwsum_loc,flwsum,A_loc,A
+        double precision ::  qstpp_y,flwsum_loc_y,flwsum_y,A_loc_y,A_y
+        double precision ::  qstpp_z,flwsum_loc_z,flwsum_z,A_loc_z,A_z
         double precision,dimension(2) :: sndbuffer,recbuffer
+        double precision,dimension(2) :: sndbuffer_y,recbuffer_y
+        double precision,dimension(2) :: sndbuffer_z,recbuffer_z
 
         MPI_FLT = MPI_DOUBLE_PRECISION
 
-        flwsum_loc = 0.0
-        A_loc      = 0.0
+        flwsum_loc = 0.0    ;  A_loc = 0.0
+        flwsum_loc_y = 0.0  ;  A_loc_y = 0.0
+        flwsum_loc_z = 0.0  ;  A_loc_z = 0.0
 
         do ib=1,nbp
-!           ispr=pl+1; iepr=dom(ib)%ttc_i-pl
+           ispr=pl+1; iepr=dom(ib)%ttc_i-pl
            jspr=pl+1; jepr=dom(ib)%ttc_j-pl
            kspr=pl+1; kepr=dom(ib)%ttc_k-pl
 
+	if(pressureforce  .eq. .true.) then
            if(dom(ib)%iprev.lt.0) then						!west
               do j=jspr,jepr
                  do k=kspr,kepr
@@ -249,29 +255,123 @@
                  end do
               end do
            end if
+	endif
+
+	if(pressureforce_y .eq. .true.) then
+           if(dom(ib)%jprev.lt.0) then
+              do i=ispr,iepr
+                 do k=kspr,kepr
+                    jsp=dom(ib)%jsu-1
+			 if (L_LSM) then
+			   if (dom(ib)%phi(isp,j,k) .ge. 0.d0) then
+                    flwsum_loc_y=flwsum_loc_y+
+     & dom(ib)%v(i,jsp,k)*dom(ib)%dx*dom(ib)%dz*
+     & (dom(ib)%dens(i,jsp,k)/densl)
+                    A_loc_y=A_loc_y+dom(ib)%dx*dom(ib)%dz*
+     & (dom(ib)%dens(i,jsp,k)/densl)
+			   end if
+			 else if (L_LSMbase) then
+			   if (dom(ib)%z(k) .le. length) then
+                    flwsum_loc_y=flwsum_loc_y+
+     & dom(ib)%v(i,jsp,k)*dom(ib)%dx*dom(ib)%dz
+                    A_loc_y=A_loc_y+dom(ib)%dx*dom(ib)%dz
+			   end if
+			 else
+                    flwsum_loc_y=flwsum_loc_y+
+     & dom(ib)%v(i,jsp,k)*dom(ib)%dx*dom(ib)%dz
+                    A_loc_y=A_loc_y+dom(ib)%dx*dom(ib)%dz
+			 end if
+                 end do
+              end do
+           end if
+	endif
+
+	if(pressureforce_z  .eq. .true.) then
+           if(dom(ib)%kprev.lt.0) then
+              do i=ispr,iepr
+                 do j=jspr,jepr
+                    ksp=dom(ib)%ksu-1
+			 if (L_LSM) then
+			   if (dom(ib)%phi(isp,j,k) .ge. 0.d0) then
+                    flwsum_loc_z=flwsum_loc_z+
+     & dom(ib)%w(i,j,ksp)*dom(ib)%dx*dom(ib)%dy*
+     & (dom(ib)%dens(i,j,ksp)/densl)
+                    A_loc_z=A_loc_z+dom(ib)%dx*dom(ib)%dy*
+     & (dom(ib)%dens(i,j,ksp)/densl)
+			   end if
+			 else if (L_LSMbase) then
+			   if (dom(ib)%z(k) .le. length) then
+                    flwsum_loc_z=flwsum_loc_z+
+     & dom(ib)%w(i,j,ksp)*dom(ib)%dx*dom(ib)%dy
+                    A_loc_z=A_loc_z+dom(ib)%dx*dom(ib)%dy
+			   end if
+			 else
+                    flwsum_loc_z=flwsum_loc_z+
+     & dom(ib)%w(i,j,ksp)*dom(ib)%dx*dom(ib)%dy
+                    A_loc_z=A_loc_z+dom(ib)%dx*dom(ib)%dy
+			 end if
+                 end do
+              end do
+           end if
+	 endif
         end do
 
 !.....sum massflux and area over all processors
-        sndbuffer(1) = flwsum_loc
-        sndbuffer(2) = A_loc
-
+	if(pressureforce .eq. .true.) then
+        sndbuffer(1)   = flwsum_loc    ;  sndbuffer(2)   = A_loc
         call MPI_ALLREDUCE(sndbuffer,recbuffer,2,
      &                   MPI_FLT,MPI_SUM,MPI_COMM_WORLD,ierr)
+        flwsum   = recbuffer(1)  ;   A        = recbuffer(2)
+	endif
 
-        flwsum = recbuffer(1)
-        A      = recbuffer(2)
+	if(pressureforce_y .eq. .true.) then
+        sndbuffer_y(1) = flwsum_loc_y  ;  sndbuffer_y(2) = A_loc_y
+        call MPI_ALLREDUCE(sndbuffer_y,recbuffer_y,2,
+     &                   MPI_FLT,MPI_SUM,MPI_COMM_WORLD,ierr)
+        flwsum_y = recbuffer_y(1)  ;   A_y    = recbuffer_y(2)
+	endif
+
+	if(pressureforce_z .eq. .true.) then
+        sndbuffer_z(1) = flwsum_loc_z  ;  sndbuffer_z(2) = A_loc_z
+        call MPI_ALLREDUCE(sndbuffer_z,recbuffer_z,2,
+     &                   MPI_FLT,MPI_SUM,MPI_COMM_WORLD,ierr)
+        flwsum_z = recbuffer_z(1)  ;   A_z    = recbuffer_z(2)
+	endif
 
 ! --- Calculate and store forcing term --------------------------------
-        qstpp = flwsum/A
-        fakfor = 0.3
+        fakfor  = 0.3
+	 if(pressureforce .eq. .true.)    qstpp   = flwsum/A
+	 if(pressureforce_y .eq. .true.)  qstpp_y = flwsum_y/A_y
+	 if(pressureforce_z .eq. .true.)  qstpp_z = flwsum_z/A_z
+
 ! Whatever the flow is lost, is added back again
 ! 	  Q(t)=Q(t-1)+0.3?  *(U(0) +U(t-1)-2*U(t))/dt
+	 if(pressureforce .eq. .true.)  then
         forcn=forcn+fakfor*(qzero+qstpn-2.0*qstpp)/dt
         qstpn = qstpp
+	 endif
 
+	 if(pressureforce_y .eq. .true.)  then
+        forcn_y=forcn_y+fakfor*(0.0+qstpn_y-2.0*qstpp_y)/dt
+        qstpn_y = qstpp_y
+	 endif
 
-        if(myrank.eq.0) write (numfile1,'(4F15.6)') 
-     &   ctime,forcn,qstpp,flwsum
+	 if(pressureforce_z .eq. .true.)  then
+        forcn_z=forcn_z+fakfor*(0.0+qstpn_z-2.0*qstpp_z)/dt
+        qstpn_z = qstpp_z
+	 endif
+
+!Write out values in the 3 directions:
+        if(myrank.eq.0) then
+	 if(pressureforce .eq. .true.)  
+     & 	write (numfile1,'(4F15.12)') ctime,forcn,qstpn,flwsum
+
+	 if(pressureforce_y .eq. .true.)  
+     & 	write (numfile4,'(4F15.12)') ctime,forcn_y,qstpn_y,flwsum_y
+
+	 if(pressureforce_y .eq. .true.)  
+     & 	write (numfile5,'(4F15.12)') ctime,forcn_z,qstpn_z,flwsum_z
+	 endif
 
         end subroutine pressure_forcing
 !##########################################################################
