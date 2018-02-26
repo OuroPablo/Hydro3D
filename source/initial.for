@@ -76,7 +76,7 @@
 			read (12,*)id_unst(i),i_unst(i),j_unst(i),k_unst(i)
 		enddo
 
-	 if (dom(ib)%bc_west.eq.7) read_inflow=.true.
+	 if (bc_w.eq.7) read_inflow=.true.
 
         mul = nul * densl
         mug = nug * densg
