@@ -14,9 +14,11 @@
 
         do ib=1,nbp
 
-        ijk_lsm=0
-        dom(ib)%dens_mg=0.0
-
+	if (L_LSM) then
+         ijk_lsm=0
+         dom(ib)%dens_mg=0.0
+	endif
+	
         dom(ib)%faz(1)=(dom(ib)%iep-dom(ib)%isp+3)*
      & (dom(ib)%jep-dom(ib)%jsp+3)*
      & (dom(ib)%kep-dom(ib)%ksp+3)
