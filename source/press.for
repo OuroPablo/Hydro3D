@@ -480,8 +480,8 @@
  3000   continue
 
         if(rmax.gt.10.d0) then
-           if(myrank.eq.0) write(numfile,*),'BIG RMAX!! STOP!!!!!',rmax
-           write(6,*),'BIG RMAX!! STOP!!!!!!!!',rmax
+           if(myrank.eq.0) write(numfile,*)'BIG RMAX!! STOP!!!!!',rmax
+           write(6,*)'BIG RMAX!! STOP!!!!!!!!',rmax
 
            if(myrank.eq.0) then
               open (unit=101, file='final_ctime.dat')
