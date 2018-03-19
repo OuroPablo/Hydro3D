@@ -377,14 +377,12 @@
 		endif
            end if
 
-          if (trim(keyword).eq.'cavity') then	
-		  do j=js-1,je+1
-		   do i=is-1,ie+1
-!                 dom(ib)%u(i,j,ke-ly)  = 1.d0	
+           if (trim(keyword).eq.'cavity') then	
+	    do j=js-1,je+1 ; do i=is-1,ie+1
                  dom(ib)%u(i,j,ke+1+ly)  = ubulk
-              end do
-		 end do
-	    endif
+            end do ; end do
+	   endif
+	   
 	  end if
 
         end do
@@ -688,6 +686,13 @@
 		      end do; end do
 		endif
            end if
+	   
+           if (trim(keyword).eq.'cavity') then	
+	    do j=js-1,je+1 ; do i=is-1,ie+1
+              	dom(ib)%v(i,j,ke+1+ly)= dom(ib)%v(i,j,ke)	
+            end do ; end do
+	   endif
+	   
 	  end if
 
         end do
@@ -995,6 +1000,11 @@
                  dom(ib)%w(i,j,ke+1+ly)=0.0	
               end do; end do
            end if
+	   if (trim(keyword).eq.'cavity') then	
+	    do j=js-1,je+1 ; do i=is-1,ie+1
+                 dom(ib)%w(i,j,ke+1+ly)=0.0	
+            end do ; end do
+	   endif
 	  end if
 
         end do
