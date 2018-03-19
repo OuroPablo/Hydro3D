@@ -28,7 +28,7 @@ F 5000			     save inflow data (precursor sim.) ; number of inlets
 1000					Number SEM inlet profiles 
 =======================Modelling Options==========================
 T 10.0 20.0 0.01               time_averaging,t_start_averaging1,t_start_averaging2,noise
-T 2                          SGS-model,1=Smagorinsky,2=WALE,3=OneEqnModel,4=k-eps model (RANS)  
+F 2                          SGS-model,1=Smagorinsky,2=WALE,3=OneEqnModel,4=k-eps model (RANS)  
 1                            LMR (1=old ghost cell approach, 2=new ghost cell approach)
 2                            pl_ex (# of extra ghost planes. pl_ex=0 -> blocks have only 1 ghost layer)
 F F F                        LIMB,LROUGH,LSCALAR
@@ -51,11 +51,11 @@ F F				     L_anim_phi,L_anim_grd
 0.0 0.0 -9.81                gx,gy,gz
 0.00				     slope
 =======================Results output options =======================
-T					Turbulent quantities
+F					Turbulent quantities
 F					Tecinstantaneous: vels written each n_out.
 F					Planes outlet (coordinates set in post.for)
 F					Pressure: Inst,Mean,Fluctuations.
-T					Binary files--> needed to RESTART
+F					Binary files--> needed to RESTART
 =======================Time series======================================
 1					Number of time series points
 7	10	10	10	
