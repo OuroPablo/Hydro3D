@@ -369,7 +369,7 @@
 	 if(pressureforce_y .eq. .true.)  
      & 	write (numfile4,'(4F15.12)') ctime,forcn_y,qstpn_y,flwsum_y
 
-	 if(pressureforce_y .eq. .true.)  
+	 if(pressureforce_z .eq. .true.)  
      & 	write (numfile5,'(4F15.12)') ctime,forcn_z,qstpn_z,flwsum_z
 	 endif
 
