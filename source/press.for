@@ -364,13 +364,13 @@
 !Write out values in the 3 directions:
         if(myrank.eq.0) then
 	 if(pressureforce .eq. .true.)  
-     & 	write (numfile1,'(4F15.12)') ctime,forcn,qstpn,flwsum
+     & 	write (numfile1,'(4F18.12)') ctime,forcn,qstpn,flwsum
 
 	 if(pressureforce_y .eq. .true.)  
-     & 	write (numfile4,'(4F15.12)') ctime,forcn_y,qstpn_y,flwsum_y
+     & 	write (numfile4,'(4F18.12)') ctime,forcn_y,qstpn_y,flwsum_y
 
 	 if(pressureforce_z .eq. .true.)  
-     & 	write (numfile5,'(4F15.12)') ctime,forcn_z,qstpn_z,flwsum_z
+     & 	write (numfile5,'(4F18.12)') ctime,forcn_z,qstpn_z,flwsum_z
 	 endif
 
         end subroutine pressure_forcing
