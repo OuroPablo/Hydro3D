@@ -149,7 +149,7 @@
 
 ! When streamwise periodic boundary conditions, the inlet velocities are
 ! corrected with the pressure gradient
-           if (pressureforce) call pressure_forcing
+           if (PERIODIC) call pressure_forcing
 
 ! Resolve the convection and diffusion components
 	CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
