@@ -70,18 +70,18 @@
 			filename='inflow/Inlet_'//domain//'_'//name_end//'.dat'
 
             	open (unit=ireadinlet+500, file=filename)
-			do k=1,dom(ib)%ttc_k
-			do j=1,dom(ib)%ttc_j
+		  do k=dom(ib)%ksu-1,dom(ib)%keu+1
+		  	do j=dom(ib)%jsu-1,dom(ib)%jeu+1
 				write(ireadinlet+500,*)dom(ib)%u(imapp,j,k)
 			enddo
 			enddo		
-			do k=1,dom(ib)%ttc_k
-			do j=1,dom(ib)%ttc_j
+		  do k=dom(ib)%ksu-1,dom(ib)%keu+1
+		  	do j=dom(ib)%jsu-1,dom(ib)%jeu+1
 				write(ireadinlet+500,*)dom(ib)%v(imapp,j,k)
 			enddo
 			enddo	
-			do k=1,dom(ib)%ttc_k
-			do j=1,dom(ib)%ttc_j
+		  do k=dom(ib)%ksu-1,dom(ib)%keu+1
+		  	do j=dom(ib)%jsu-1,dom(ib)%jeu+1
 				write(ireadinlet+500,*)dom(ib)%w(imapp,j,k)
 			enddo
 			enddo		
@@ -130,14 +130,17 @@
      &	TRIM(ADJUSTL(domain)) ! e.g. "0001"
 	       filename='inflow/Mapping_'//domain//'.dat'
       	open (unit=ireadinlet+500, file=filename)
-		  do k=1,dom(ib)%ttc_k ; do j=1,dom(ib)%ttc_j
+		  do k=dom(ib)%ksu-1,dom(ib)%keu+1
+		  	do j=dom(ib)%jsu-1,dom(ib)%jeu+1
 			write(ireadinlet+500,*)dom(ib)%u(imapp,j,k)
 		  enddo ;enddo		
-		  do k=1,dom(ib)%ttc_k ; do j=1,dom(ib)%ttc_j
-			write(ireadinlet+500,*)dom(ib)%v(imapp,j,k)
+		  do k=dom(ib)%ksu-1,dom(ib)%keu+1
+		  	do j=dom(ib)%jsu-1,dom(ib)%jeu+1
+		  	 write(ireadinlet+500,*)dom(ib)%v(imapp,j,k)
 		  enddo ;enddo	
-		  do k=1,dom(ib)%ttc_k ; do j=1,dom(ib)%ttc_j
-			write(ireadinlet+500,*)dom(ib)%w(imapp,j,k)
+		  do k=dom(ib)%ksu-1,dom(ib)%keu+1
+		  	do j=dom(ib)%jsu-1,dom(ib)%jeu+1
+		  	 write(ireadinlet+500,*)dom(ib)%w(imapp,j,k)
 		  enddo ;enddo	
 		close(ireadinlet+500)
 	     endif

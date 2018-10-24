@@ -325,7 +325,6 @@
         integer :: ki,ib,inind,jnind,knind
         character*8 :: chb
         character*25 :: gf
-	  double precision :: tau
 
         do ib=1,nbp
 
@@ -352,13 +351,6 @@
         do k=1,totk
            do j=1,totj
               do i=1,toti
-	  tau=0.0
-	  !if (i.eq.pl) tau=dom(ib)%tauwe(j,k)
-	  !if (i.eq.toti-pl) tau=dom(ib)%tauww(j,k)
-	  if (j.eq.pl) tau=dom(ib)%tauws(i,k)
-	  if (j.eq.totj-pl) tau=dom(ib)%tauwn(i,k)
-	  if (k.eq.pl) tau=dom(ib)%tauwb(i,j)
-	  !if (k.eq.totk-pl) tau=dom(ib)%tauwt(i,j)
 
         write (88) dom(ib)%x(i),dom(ib)%y(j),dom(ib)%z(k),
      & dom(ib)%p(i,j,k),dom(ib)%pm(i,j,k),dom(ib)%ppm(i,j,k),
@@ -367,7 +359,7 @@
      & dom(ib)%v(i,j,k),dom(ib)%vm(i,j,k),dom(ib)%vvm(i,j,k),
      & dom(ib)%w(i,j,k),dom(ib)%wm(i,j,k),dom(ib)%wwm(i,j,k),
      & dom(ib)%uvm(i,j,k),dom(ib)%uwm(i,j,k),dom(ib)%vwm(i,j,k),
-     & dom(ib)%ksgs(i,j,k),dom(ib)%eps(i,j,k),dom(ib)%epsm(i,j,k)!,tau
+     & dom(ib)%ksgs(i,j,k),dom(ib)%eps(i,j,k),dom(ib)%epsm(i,j,k)
               end do
            end do
         end do

@@ -60,7 +60,7 @@
 	  ireadinlet = 0
 	  iaddinlet = 1
 
-	if (myrank.eq.1) then
+	if (myrank.eq.0) then
 	   open(unit=203, file='worktime.dat')
 	   write(203,*)'Variables=it,dt,CFL,C-D,PSolver,IBM,LSM,Total' !Add LPT if needed
 	endif
@@ -68,7 +68,7 @@
 !================== Start Time Loop ====================================
         do itime=itime_start,itime_end
 
-	     if (myrank.eq.1) wtime_total = MPI_WTIME ( )
+	     if (myrank.eq.0) wtime_total = MPI_WTIME ( )
 !Calculate time step
            call checkdt
 
@@ -119,11 +119,11 @@
 !Calculate free-surface using level set method
            if (L_LSM)  then
 			CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-		      if (myrank.eq.1) wtime_lsm = MPI_WTIME ( )
+		      if (myrank.eq.0) wtime_lsm = MPI_WTIME ( )
              call LSM_3D
              call heaviside 
 			CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-			if (myrank.eq.1) wtime_lsm = MPI_WTIME( )-wtime_lsm
+			if (myrank.eq.0) wtime_lsm = MPI_WTIME( )-wtime_lsm
            end if
 !Initial calculations in IBM to allocate particles to domains and cpus
            if (LIMB)  call IB_previous						    
@@ -153,7 +153,7 @@
 
 ! Resolve the convection and diffusion components
 	CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-	if (myrank.eq.1) wtime_cd = MPI_WTIME ( )
+	if (myrank.eq.0) wtime_cd = MPI_WTIME ( )
            if(conv_sch.eq.3 .or. conv_sch.eq.4) then
               do kutta=1,kuttacond
                  if (kutta.eq.1) then
@@ -189,7 +189,7 @@
               call diffusion
            end if
 	CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-	if (myrank.eq.1) wtime_cd=MPI_WTIME( )-wtime_cd
+	if (myrank.eq.0) wtime_cd=MPI_WTIME( )-wtime_cd
 
 !Lagrangian particle tracking:
            	if (LPT) then								
@@ -202,22 +202,22 @@
 !Immersed boundary method
          IF (LIMB) then
 		CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-	     if (myrank.eq.1) wtime_ib = MPI_WTIME ( ) 
+	     if (myrank.eq.0) wtime_ib = MPI_WTIME ( ) 
  			call IBM					
 		CALL MPI_BARRIER(MPI_COMM_WORLD,ierr)
-	     if (myrank.eq.1) wtime_ib = MPI_WTIME ( ) - wtime_ib
+	     if (myrank.eq.0) wtime_ib = MPI_WTIME ( ) - wtime_ib
 	   ENDIF
 !Correction of the outlet velocity in order to guarantee mass conservation
            call correctoutflux
 
 !Resolve Poisson pressure correction equation
-	     if (myrank.eq.1) wtime_solver = MPI_WTIME ( )
+	     if (myrank.eq.0) wtime_solver = MPI_WTIME ( )
            if(solver.eq.1) then
               call pressure_1sweep	!SIP solver
            else if(solver.eq.2) then
               call newsolv_mg		!Multi-grid
            end if
-	     if (myrank.eq.1) wtime_solver = MPI_WTIME ( ) - wtime_solver
+	     if (myrank.eq.0) wtime_solver = MPI_WTIME ( ) - wtime_solver
 
 !Calculate averaged variables:
         if(time_averaging.and.
@@ -282,7 +282,7 @@
            end if
 
 !OUTPUT THE TIME SPENT AT DIFFERENT SUBROUTINES  ---------------------
-	 if (myrank.eq.1) then
+	 if (myrank.eq.0) then
 	   wtime_total = MPI_WTIME ( ) - wtime_total
 	   write(203,'(i6,1f12.7,6f12.5)')itime,dt,wtime_cfl
      &     ,wtime_cd,wtime_solver,wtime_ib,wtime_lsm,wtime_total

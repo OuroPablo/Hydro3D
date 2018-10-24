@@ -591,19 +591,40 @@
 		if (dom(ib)%bc_east.lt.61 .and. dom(ib)%bc_east.ne.4) then    
               do j=dom(ib)%jsu,dom(ib)%jeu 
                  do k=dom(ib)%ksu,dom(ib)%keu  
+	             if (L_LSM) then							!PABLO 04/18
+			   if (dom(ib)%phi(dom(ib)%ieu+1,j,k) .ge. 0.0) then  
            dom(ib)%u(dom(ib)%ieu+1,j,k)=dom(ib)%u(dom(ib)%ieu+1,j,k)*fct
+			   end if
+			 else
+           dom(ib)%u(dom(ib)%ieu+1,j,k)=dom(ib)%u(dom(ib)%ieu+1,j,k)*fct
+			 end if
+ !          dom(ib)%u(dom(ib)%ieu+1,j,k)=dom(ib)%u(dom(ib)%ieu+1,j,k)*fct
                  end do
               end do
 
               do j=dom(ib)%jsv,dom(ib)%jev 
                  do k=dom(ib)%ksv,dom(ib)%kev  
+	             if (L_LSM) then							!PABLO 04/18
+			   if (dom(ib)%phi(dom(ib)%iev+1,j,k) .ge. 0.0) then  
            dom(ib)%v(dom(ib)%iev+1,j,k)=dom(ib)%v(dom(ib)%iev+1,j,k)*fct
+			   end if
+			 else
+           dom(ib)%v(dom(ib)%iev+1,j,k)=dom(ib)%v(dom(ib)%iev+1,j,k)*fct
+			 end if
+!           dom(ib)%v(dom(ib)%iev+1,j,k)=dom(ib)%v(dom(ib)%iev+1,j,k)*fct
                  end do
               end do
 
               do j=dom(ib)%jsw,dom(ib)%jew 
-                 do k=dom(ib)%ksw,dom(ib)%kew  
+                 do k=dom(ib)%ksw,dom(ib)%kew 
+	             if (L_LSM) then							!PABLO 04/18
+			   if (dom(ib)%phi(dom(ib)%iew+1,j,k) .ge. 0.0) then  
            dom(ib)%w(dom(ib)%iew+1,j,k)=dom(ib)%w(dom(ib)%iew+1,j,k)*fct
+			   end if
+			 else
+           dom(ib)%w(dom(ib)%iew+1,j,k)=dom(ib)%w(dom(ib)%iew+1,j,k)*fct
+			 end if 
+!           dom(ib)%w(dom(ib)%iew+1,j,k)=dom(ib)%w(dom(ib)%iew+1,j,k)*fct
                  end do
               end do
 		endif
@@ -613,19 +634,40 @@
 		if (dom(ib)%bc_north.lt.61 .and. dom(ib)%bc_north.ne.4) then    
               do i=dom(ib)%isu,dom(ib)%ieu 
                  do k=dom(ib)%ksu,dom(ib)%keu  
+	             if (L_LSM) then							!PABLO 04/18
+			   if (dom(ib)%phi(i,dom(ib)%jeu+1,k) .ge. 0.0) then  
            dom(ib)%u(i,dom(ib)%jeu+1,k)=dom(ib)%u(i,dom(ib)%jeu+1,k)*fct
+			   end if
+			 else
+           dom(ib)%u(i,dom(ib)%jeu+1,k)=dom(ib)%u(i,dom(ib)%jeu+1,k)*fct
+			 end if
+!           dom(ib)%u(i,dom(ib)%jeu+1,k)=dom(ib)%u(i,dom(ib)%jeu+1,k)*fct
                  end do
               end do
 
               do i=dom(ib)%isv,dom(ib)%iev 
                  do k=dom(ib)%ksv,dom(ib)%kev  
+	             if (L_LSM) then							!PABLO 04/18
+			   if (dom(ib)%phi(i,dom(ib)%jev+1,k) .ge. 0.0) then  
            dom(ib)%v(i,dom(ib)%jev+1,k)=dom(ib)%v(i,dom(ib)%jev+1,k)*fct
+			   end if
+			 else
+           dom(ib)%v(i,dom(ib)%jev+1,k)=dom(ib)%v(i,dom(ib)%jev+1,k)*fct
+			 end if
+!           dom(ib)%v(i,dom(ib)%jev+1,k)=dom(ib)%v(i,dom(ib)%jev+1,k)*fct
                  end do
               end do
 
               do i=dom(ib)%isw,dom(ib)%iew 
-                 do k=dom(ib)%ksw,dom(ib)%kew  
+                 do k=dom(ib)%ksw,dom(ib)%kew
+	             if (L_LSM) then							!PABLO 04/18
+			   if (dom(ib)%phi(i,dom(ib)%jew+1,k) .ge. 0.0) then  
            dom(ib)%w(i,dom(ib)%jew+1,k)=dom(ib)%w(i,dom(ib)%jew+1,k)*fct
+			   end if
+			 else
+           dom(ib)%w(i,dom(ib)%jew+1,k)=dom(ib)%w(i,dom(ib)%jew+1,k)*fct
+			 end if  
+!           dom(ib)%w(i,dom(ib)%jew+1,k)=dom(ib)%w(i,dom(ib)%jew+1,k)*fct
                  end do
               end do
 		endif
@@ -634,20 +676,41 @@
            if(dom(ib)%knext.lt.0) then
 		if (dom(ib)%bc_top.lt.61 .and. dom(ib)%bc_top.ne.4) then    
               do i=dom(ib)%isu,dom(ib)%ieu 
-                 do j=dom(ib)%jsu,dom(ib)%jeu  
+                 do j=dom(ib)%jsu,dom(ib)%jeu
+	             if (L_LSM) then							!PABLO 04/18
+			   if (dom(ib)%phi(i,j,dom(ib)%keu+1) .ge. 0.0) then  
            dom(ib)%u(i,j,dom(ib)%keu+1)=dom(ib)%u(i,j,dom(ib)%keu+1)*fct
+			   end if
+			 else
+           dom(ib)%u(i,j,dom(ib)%keu+1)=dom(ib)%u(i,j,dom(ib)%keu+1)*fct
+			 end if   
+!           dom(ib)%u(i,j,dom(ib)%keu+1)=dom(ib)%u(i,j,dom(ib)%keu+1)*fct
                  end do
               end do
 
               do i=dom(ib)%isv,dom(ib)%iev 
-                 do j=dom(ib)%jsv,dom(ib)%jev  
+                 do j=dom(ib)%jsv,dom(ib)%jev 
+	             if (L_LSM) then							!PABLO 04/18
+			   if (dom(ib)%phi(i,j,dom(ib)%kev+1) .ge. 0.0) then  
            dom(ib)%v(i,j,dom(ib)%kev+1)=dom(ib)%v(i,j,dom(ib)%kev+1)*fct
+			   end if
+			 else
+           dom(ib)%v(i,j,dom(ib)%kev+1)=dom(ib)%v(i,j,dom(ib)%kev+1)*fct
+			 end if  
+!           dom(ib)%v(i,j,dom(ib)%kev+1)=dom(ib)%v(i,j,dom(ib)%kev+1)*fct
                  end do
               end do
 
               do i=dom(ib)%isw,dom(ib)%iew 
-                 do j=dom(ib)%jsw,dom(ib)%jew  
+                 do j=dom(ib)%jsw,dom(ib)%jew 
+	             if (L_LSM) then							!PABLO 04/18
+			   if (dom(ib)%phi(i,j,dom(ib)%kew+1) .ge. 0.0) then  
            dom(ib)%w(i,j,dom(ib)%kew+1)=dom(ib)%w(i,j,dom(ib)%kew+1)*fct
+			   end if
+			 else
+           dom(ib)%w(i,j,dom(ib)%kew+1)=dom(ib)%w(i,j,dom(ib)%kew+1)*fct
+			 end if  
+!           dom(ib)%w(i,j,dom(ib)%kew+1)=dom(ib)%w(i,j,dom(ib)%kew+1)*fct
                  end do
               end do
 		endif
@@ -682,20 +745,26 @@
 
               qzero=ubulk 
               open (unit=700, file='final_ctime.dat')
-               read (700,'(i8,3F15.6)') ntime,ctime,forcn,qstpn
+               read (700,'(i8,3F18.12)') ntime,ctime,forcn,qstpn
               close (700)
 
 	     if(pressureforce_y .eq. .true.) then				!PABLO 02/18
               open (unit=700, file='forcn_y.dat')
-               read (700,'(4F15.6)') dum,forcn_y,qstpn_y,dum
+		      do i=1,ntime
+		       read (700,*) 
+		      enddo
+                read (700,'(4F18.12)') dum,forcn_y,qstpn_y,dum	
               close (700)
-		endif
+		    endif
 
 	     if(pressureforce_z .eq. .true.) then
               open (unit=700, file='forcn_z.dat')
-               read (700,'(4F15.6)') dum,forcn_z,qstpn_z,dum
+		       do i=1,ntime
+		        read (700,*) 
+		       enddo
+               read (700,'(4F18.12)') dum,forcn_z,qstpn_z,dum
               close (700)
-		endif
+		    endif
 
               write(chb1,'(i4)') dom_id(ib)
               sn=len(trim(adjustl(chb1)))
@@ -1047,6 +1116,7 @@
 
 
 !.######### U=> Power law inlet conditions .##########
+!NEED TO ADAPT THESE TO LSM
           IF (dom(ib)%bc_west.eq.12 .or. 
      &  (dom(ib)%bc_west.eq.8 .and. UPROF.eq.12)) THEN	
            do i = 1,tti ; do j = 1,ttj ; 	 do k = 1,ttk 

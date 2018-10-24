@@ -140,7 +140,7 @@
       use mpi
       implicit none
       integer, intent (in) :: M,L,ib
-	integer :: fileact
+	  integer :: fileact
       DOUBLE PRECISION :: Utheta,Vrel,Vrot,phi,alpeff,Lift,Drag,F1,GVAL
 
 !actuator line - HATT: forced velocities based on rotational speed
@@ -176,24 +176,6 @@
 		FX1_loc(L)=FX1_loc(L)/(dom(ib)%dz*c_act(L))
 		FX2_loc(L)=FX2_loc(L)/(dom(ib)%dz*c_act(L))
 		FX3_loc(L)=FX3_loc(L)/(dom(ib)%dz*c_act(L))
-
-!	IF(L.eq.10)THEN
-!	write(6,'(a,i2,3f12.5)')' L :',L,phi,U_Beta1_loc(L),Utheta
-!	write(6,'(a,i2,4f12.5)')' L :',L,phi
-!     & ,1-(U_Beta1_loc(L)/UBULK)
-!     &  ,(Drag*dcos(alpeff)-Lift*dsin(alpeff))*1000.d0
-!	write(6,*)Utheta,radsin(M)*R0_loc(L),F1
-!	write(6,*)Pit_act(L),alpeff*180.D0/3.1416D0,phi
-!	write(6,*)Cl_act,Cd_act,c_act(L)
-!	write(6,*)Lift,Drag,dzm,Vrel
-!	write(6,*)U_Beta1_loc(L),U_Beta2_loc(L),U_Beta3_loc(L)
-!	write(6,*)phi,Cl_act,c_act(L),dom(ib)%dz,Vrel**2
-!	write(6,*)FX2_loc(L)*dcos(rads(M))-FX3_loc(L)*dsin(rads(M))
-!	write(6,*)Drag*dsin(alpeff)+Lift*dcos(alpeff)
-!	write(6,*)(-Drag*dcos(alpeff)+Lift*dsin(alpeff))
-!	write(6,*)' --- '
-!	ENDIF
-
 
    88 FORMAT (1f12.6,5e15.7)
       RETURN
