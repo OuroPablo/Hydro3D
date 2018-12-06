@@ -116,17 +116,17 @@
         IF (imb_shape(M).eq.1) call imb_square(M)
         IF (imb_shape(M).eq.2) call imb_cylinder(M)
         IF (imb_shape(M).eq.3) call imb_cube(M)
-	  IF (imb_shape(M).eq.4) call imb_sphere(M)
+	IF (imb_shape(M).eq.4) call imb_sphere(M)
         IF (imb_shape(M).eq.11)call imb_cone(M)
         IF (imb_shape(M).eq.12)call imb_dune(M)
         IF (imb_shape(M).eq.13)call imb_hemisphere(M)
- 	  IF (imb_shape(M).eq.5 .and. turax(M).le.2) call imb_file(M)		!07_2017
- 	  IF (imb_shape(M).eq.5 .and. turax(M).eq.3) call act_line_geom(M)
+ 	IF (imb_shape(M).eq.5 .and. turax(M).le.2) call imb_file(M)		!07_2017
+ 	IF (imb_shape(M).eq.5 .and. turax(M).eq.3) call act_line_geom(M)
 ! 	  IF (imb_shape(M).eq.5 .and. turax(M).eq.4) call imb_actuator_surf(M)
    	maxnodeIBS=maxnodeIBS+nodes(M)
-	  IF (maxnodeIBS.gt.maxn) 
+	IF (maxnodeIBS.gt.maxn)
      & write(6,*)'Too many ib points, change maxn in imb.for'
-	  IF (maxnodeIBS.gt.maxn) STOP
+	IF (maxnodeIBS.gt.maxn) STOP
 	Enddo
 
 !The velocity and force vectors/matrix are allocated:
@@ -134,8 +134,8 @@
       allocate (U_Beta3(bodynum,maxnodeIBS),imb_block(maxnodeIBS))
       allocate (alpha0(bodynum,maxnodeIBS),R0(bodynum,maxnodeIBS))
 !Initiate all these variables:
-		 U_Beta1_loc=0.d0 ; U_Beta2_loc=0.d0  ; U_Beta3_loc=0.d0 
-	       R0=0.d0 		; alpha0=0.d0	  ; imb_block=0
+	U_Beta1=0.d0  ; U_Beta2=0.d0  ; U_Beta3=0.d0
+	R0=0.d0       ; alpha0=0.d0	  ; imb_block=0
 
 	if (myrank.eq.master) then
        allocate (FX1(bodynum,maxnodeIBS)) ; FX1=0.D0 
@@ -658,21 +658,21 @@
 	IF(nnnmls.eq.0) then
 
 	Do ib=1,nbp  !Loop through all the blocks of one processor
-       if (imbinblock_loc(dom_id(ib)+1).eq.0) GOTO 600 !IF THERE ARE NO POINTS IN THE BLOCK
+       if (imbinblock_loc(dom_id(ib)+1).ne.0) then !IF THERE ARE NO POINTS IN THE BLOCK
       Do L = 1,maxnodeIBS !investigate all the IB points
       	nl=0 ;dhtotal=0.d0
-	IF(imb_block_loc(L).ne.dom_id(ib)) GOTO 700 !If the IB point is not in the present block
+	IF(imb_block_loc(L).EQ.dom_id(ib)) THEN !If the IB point is not in the present block
 	IF(rott_loc(L).ne.2) GOTO 700	!If the Lagrangian is dynamic:exit
 !NEIGHBOURS FOR THE U-GRID
           DO I = 1, dom(ib)%ttc_i 
-       IF (dom(ib)%x(i) .gt.(nodex_loc(L)+nxl*dom(ib)%dx) .or.
-     &     dom(ib)%x(i) .lt.(nodex_loc(L)-nxl*dom(ib)%dx)) GOTO 210
+       IF (dom(ib)%x(i) .ge.(nodex_loc(L)-nxl*dom(ib)%dx) .AND.
+     &     dom(ib)%x(i) .lt.(nodex_loc(L)+nxl*dom(ib)%dx)) THEN
            DO J = 1, dom(ib)%ttc_j 
-       IF (dom(ib)%yc(j).gt.(nodey_loc(L)+nxl*dom(ib)%dy) .or.
-     &     dom(ib)%yc(j).lt.(nodey_loc(L)-nxl*dom(ib)%dy)) GOTO 211
+       IF (dom(ib)%yc(j).ge.(nodey_loc(L)-nxl*dom(ib)%dy) .AND.
+     &     dom(ib)%yc(j).lt.(nodey_loc(L)+nxl*dom(ib)%dy)) THEN
             DO K = 1, dom(ib)%ttc_k 
-       IF (dom(ib)%zc(k).gt.(nodez_loc(L)+nxl*dom(ib)%dz) .or.
-     &     dom(ib)%zc(k).lt.(nodez_loc(L)-nxl*dom(ib)%dz)) GOTO 212 
+       IF (dom(ib)%zc(k).ge.(nodez_loc(L)-nxl*dom(ib)%dz) .AND.
+     &     dom(ib)%zc(k).lt.(nodez_loc(L)+nxl*dom(ib)%dz)) THEN 
 !nl indicates the number of the neighbour and dh1 the delta functions value.
 	nl=nl+1
  	  dh1_loc(L,nl)=dh(dom(ib)%dx,dom(ib)%dy,dom(ib)%dz,
@@ -682,28 +682,26 @@
 	  I_nr_U(L,nl)=I ;  J_nr_U(L,nl)=J ;  K_nr_U(L,nl)=K
 	  dhtotal=dhtotal+dh1_loc(L,nl)
 	  if(dhtotal.ge.0.99999) goto 876
-212         CONTINUE
+	    ENDIF
             END DO
-211         CONTINUE
+	   ENDIF
            END DO
-210         CONTINUE
+	  ENDIF
           END DO
-!	 write(6,*)nodex_loc(L),nodey_loc(L),nodez_loc(L)
-!	 write(6,*)I,J,K
         dh1_loc(L,nl)=dh1_loc(L,nl)/dhtotal
 876	continue       
 	kmaxU(L)=nl !# of neighbours of the Lagrangian L
 !NEIGHBOURS FOR THE V-GRID
       	nl=0 ;dhtotal=0.d0
           DO I = 1, dom(ib)%ttc_i 
-       IF (dom(ib)%xc(i).gt.(nodex_loc(L)+nxl*dom(ib)%dx) .or.
-     &     dom(ib)%xc(i).lt.(nodex_loc(L)-nxl*dom(ib)%dx))GOTO 220
+       IF (dom(ib)%xc(i).ge.(nodex_loc(L)-nxl*dom(ib)%dx) .AND.
+     &     dom(ib)%xc(i).lt.(nodex_loc(L)+nxl*dom(ib)%dx)) THEN
            DO J = 1, dom(ib)%ttc_j 
-       IF (dom(ib)%y(j) .gt.(nodey_loc(L)+nxl*dom(ib)%dy) .or.
-     &     dom(ib)%y(j) .lt.(nodey_loc(L)-nxl*dom(ib)%dy))GOTO 221 
+       IF (dom(ib)%y(j) .ge.(nodey_loc(L)-nxl*dom(ib)%dy) .AND.
+     &     dom(ib)%y(j) .lt.(nodey_loc(L)+nxl*dom(ib)%dy)) THEN
             DO K = 1, dom(ib)%ttc_k 
-       IF (dom(ib)%zc(k).gt.(nodez_loc(L)+nxl*dom(ib)%dz) .or.
-     &     dom(ib)%zc(k).lt.(nodez_loc(L)-nxl*dom(ib)%dz) )  GOTO 222 
+       IF (dom(ib)%zc(k).ge.(nodez_loc(L)-nxl*dom(ib)%dz) .AND.
+     &     dom(ib)%zc(k).lt.(nodez_loc(L)+nxl*dom(ib)%dz) ) THEN 
 	nl=nl+1
  	  dh2_loc(L,nl)=dh(dom(ib)%dx,dom(ib)%dy,dom(ib)%dz,
      &  dom(ib)%XC(I),dom(ib)%Y(J),dom(ib)%ZC(K)
@@ -711,11 +709,11 @@
 	 I_nr_V(L,nl)=I ;  J_nr_V(L,nl)=J ;  K_nr_V(L,nl)=K
 	 dhtotal=dhtotal+dh2_loc(L,nl)
 	  if(dhtotal.ge.0.99999) goto 877
-222         CONTINUE
+	    ENDIF
             END DO
-221         CONTINUE
+	   ENDIF
            END DO
-220         CONTINUE
+	  ENDIF
           END DO
         dh2_loc(L,nl)=dh2_loc(L,nl)/dhtotal
 877	continue              
@@ -723,14 +721,14 @@
 !NEIGHBOURS FOR THE W-GRID
       	nl=0 ;dhtotal=0.d0
           DO I = 1, dom(ib)%ttc_i 
-       IF (dom(ib)%xc(i).gt.(nodex_loc(L)+nxl*dom(ib)%dx) .or.
-     &     dom(ib)%xc(i).lt.(nodex_loc(L)-nxl*dom(ib)%dx) )  GOTO 230 
+       IF (dom(ib)%xc(i).ge.(nodex_loc(L)-nxl*dom(ib)%dx) .AND.
+     &     dom(ib)%xc(i).lt.(nodex_loc(L)+nxl*dom(ib)%dx) )  THEN 
            DO J = 1, dom(ib)%ttc_j 
-       IF (dom(ib)%yc(j).gt.(nodey_loc(L)+nxl*dom(ib)%dy) .or.
-     &     dom(ib)%yc(j).lt.(nodey_loc(L)-nxl*dom(ib)%dy) )  GOTO 231 
+       IF (dom(ib)%yc(j).ge.(nodey_loc(L)-nxl*dom(ib)%dy) .AND.
+     &     dom(ib)%yc(j).lt.(nodey_loc(L)+nxl*dom(ib)%dy) )  THEN 
             DO K = 1, dom(ib)%ttc_k 
-       IF (dom(ib)%z(k) .gt.(nodez_loc(L)+nxl*dom(ib)%dz) .or.
-     &     dom(ib)%z(k) .lt.(nodez_loc(L)-nxl*dom(ib)%dz) )  GOTO 232 
+       IF (dom(ib)%z(k) .ge.(nodez_loc(L)-nxl*dom(ib)%dz) .AND.
+     &     dom(ib)%z(k) .lt.(nodez_loc(L)+nxl*dom(ib)%dz) )  THEN 
 	nl=nl+1
  	  dh3_loc(L,nl)=dh(dom(ib)%dx,dom(ib)%dy,dom(ib)%dz,
      &  dom(ib)%XC(I),dom(ib)%YC(J),dom(ib)%Z(K)
@@ -738,18 +736,18 @@
 	 I_nr_W(L,nl)=I ;  J_nr_W(L,nl)=J ;  K_nr_W(L,nl)=K
 	 dhtotal=dhtotal+dh3_loc(L,nl)
 	  if(dhtotal.ge.0.99999) goto 878
-232         CONTINUE
+	    ENDIF
             END DO
-231         CONTINUE
+	   ENDIF
            END DO
-230         CONTINUE
+	  ENDIF
           END DO
         dh3_loc(L,nl)=dh3_loc(L,nl)/dhtotal
 878	 continue                     
 	kmaxW(L)=nl 	
-700	 CONTINUE   
+	ENDIF
         Enddo
-600	CONTINUE   
+       ENDIF  
       ENDDO
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	ELSE !MLS IS USED        
@@ -788,7 +786,7 @@
 	U_Beta1_loc=0.d0 ; U_Beta2_loc=0.d0 ; U_Beta3_loc=0.d0	!Pablo
 	Do ib=1,nbp
 
-      if (imbinblock_loc(dom_id(ib)+1).eq.0) GOTO 600
+      if (imbinblock_loc(dom_id(ib)+1).ne.0) THEN
 
 	if (maxnodeIBS.le.100) nt = 1
 	if (maxnodeIBS.gt.100) nt = OMP_threads
@@ -798,7 +796,7 @@
 	nnmls=2
 	IF (nnmls.eq.1) then
 !$OMP parallel DEFAULT(SHARED)PRIVATE(I,J,K,L,nl)
-!$OMP DO SCHEDULE(DYNAMIC,1)
+!$OMP DO SCHEDULE(DYNAMIC,50)
       Do L = 1,maxnodeIBS
 	  IF(imb_block_loc(L).ne.dom_id(ib)) GOTO 901 
         IF(rott_loc(L).eq.1 ) then
@@ -826,20 +824,20 @@
 	else
 !Using delta functions. Interpolation of U-velocities
 !$OMP parallel DEFAULT(SHARED)PRIVATE(I,J,K,L,nl)
-!$OMP DO SCHEDULE(DYNAMIC,1)
+!$OMP DO SCHEDULE(DYNAMIC,50)
       Do L = 1,maxnodeIBS
 	 nl=0 
-	IF(imb_block_loc(L).ne.dom_id(ib)) GOTO 700 
+	IF(imb_block_loc(L).eq.dom_id(ib)) THEN
 	 IF( rott_loc(L).eq.1 )then
           DO I = 1, dom(ib)%ttc_i 
-       IF (dom(ib)%x(i) .gt.(nodex_loc(L)+nxl*dom(ib)%dx) .or.
-     &     dom(ib)%x(i) .lt.(nodex_loc(L)-nxl*dom(ib)%dx)) GOTO 210
+       IF (dom(ib)%x(i) .ge.(nodex_loc(L)-nxl*dom(ib)%dx) .and.
+     &     dom(ib)%x(i) .lt.(nodex_loc(L)+nxl*dom(ib)%dx)) THEN
            DO J = 1, dom(ib)%ttc_j 
-       IF (dom(ib)%yc(j).gt.(nodey_loc(L)+nxl*dom(ib)%dy) .or.
-     &     dom(ib)%yc(j).lt.(nodey_loc(L)-nxl*dom(ib)%dy)) GOTO 211
+       IF (dom(ib)%yc(j).ge.(nodey_loc(L)-nxl*dom(ib)%dy) .and.
+     &     dom(ib)%yc(j).lt.(nodey_loc(L)+nxl*dom(ib)%dy)) THEN
             DO K = 1, dom(ib)%ttc_k 
-       IF (dom(ib)%zc(k).gt.(nodez_loc(L)+nxl*dom(ib)%dz) .or.
-     &     dom(ib)%zc(k).lt.(nodez_loc(L)-nxl*dom(ib)%dz)) GOTO 212 
+       IF (dom(ib)%zc(k).ge.(nodez_loc(L)-nxl*dom(ib)%dz) .and.
+     &     dom(ib)%zc(k).lt.(nodez_loc(L)+nxl*dom(ib)%dz)) THEN 
 	 nl=nl+1
         dh1_loc(L,nl)= dh(dom(ib)%dx,dom(ib)%dy,dom(ib)%dz,
      &  dom(ib)%X(I),dom(ib)%YC(J),dom(ib)%ZC(K)
@@ -855,37 +853,38 @@
 		if (yangcase.eq.1 .and. nl.ge.27)  GOTO 700
 		if (yangcase.eq.5 .and. nl.ge.27)  GOTO 700
  
-212         CONTINUE
+	    ENDIF
             END DO
-211         CONTINUE
+	   ENDIF
            END DO
-210         CONTINUE
-          END DO        
+	  ENDIF
+          END DO
        if (nl.eq.0) write(6,*)L,'nl is equal to 0!!'
         
 	ELSE
-	 Do nl=1,KmaxU(L)
+	  Do nl=1,KmaxU(L)
 	  I=I_nr_U(L,nl) ;  J=J_nr_U(L,nl) ;  K=K_nr_U(L,nl)
         U_Beta1_loc(L)=U_Beta1_loc(L)+dom(ib)%USTAR(I,J,K)*dh1_loc(L,nl)       
-  	 Enddo  	 
-	ENDIF
-700	continue
+  	  Enddo  	 
+	 ENDIF
+700 	continue
+	endif
       Enddo
 !$OMP END DO
-!$OMP DO SCHEDULE(DYNAMIC,1)
+!$OMP DO SCHEDULE(DYNAMIC,50)
       Do L = 1,maxnodeIBS
-	IF(imb_block_loc(L).ne.dom_id(ib)) GOTO 701 
+	IF(imb_block_loc(L).eq.dom_id(ib)) THEN
 	 nl=0 
 	IF( rott_loc(L).eq.1 )then
           DO I = 1, dom(ib)%ttc_i 
-       IF (dom(ib)%xc(i).gt.(nodex_loc(L)+nxl*dom(ib)%dx) .or.
-     &     dom(ib)%xc(i).lt.(nodex_loc(L)-nxl*dom(ib)%dx))GOTO 220
+       IF (dom(ib)%xc(i).ge.(nodex_loc(L)-nxl*dom(ib)%dx) .and.
+     &     dom(ib)%xc(i).lt.(nodex_loc(L)+nxl*dom(ib)%dx)) then
            DO J = 1, dom(ib)%ttc_j 
-       IF (dom(ib)%y(j) .gt.(nodey_loc(L)+nxl*dom(ib)%dy) .or.
-     &     dom(ib)%y(j) .lt.(nodey_loc(L)-nxl*dom(ib)%dy))GOTO 221 
+       IF (dom(ib)%y(j) .ge.(nodey_loc(L)-nxl*dom(ib)%dy) .and.
+     &     dom(ib)%y(j) .lt.(nodey_loc(L)+nxl*dom(ib)%dy)) then
             DO K = 1, dom(ib)%ttc_k 
-       IF (dom(ib)%zc(k).gt.(nodez_loc(L)+nxl*dom(ib)%dz) .or.
-     &     dom(ib)%zc(k).lt.(nodez_loc(L)-nxl*dom(ib)%dz))GOTO 222 
+       IF (dom(ib)%zc(k).ge.(nodez_loc(L)-nxl*dom(ib)%dz) .and.
+     &     dom(ib)%zc(k).lt.(nodez_loc(L)+nxl*dom(ib)%dz)) then 
 	 nl=nl+1
         dh2_loc(L,nl)= dh(dom(ib)%dx,dom(ib)%dy,dom(ib)%dz,
      &  dom(ib)%XC(I),dom(ib)%Y(J),dom(ib)%ZC(K)
@@ -901,11 +900,11 @@
 	if (yangcase.eq.1 .and. nl.ge.27)  GOTO 701
 	if (yangcase.eq.5 .and. nl.ge.27)  GOTO 701
  
-222         CONTINUE
+	    ENDIF
             END DO
-221         CONTINUE
+	   ENDIF
            END DO
-220         CONTINUE
+	  ENDIF
           END DO
        if (nl.eq.0) write(6,*)L,'nl is equal to 0!!'         
 	ELSE
@@ -915,22 +914,23 @@
   	 Enddo
 	ENDIF
 701	continue
+	endif
       Enddo
 !$OMP END DO
-!$OMP DO SCHEDULE(DYNAMIC,1)
+!$OMP DO SCHEDULE(DYNAMIC,50)
       Do L = 1,maxnodeIBS
-	IF(imb_block_loc(L).ne.dom_id(ib)) GOTO 702 
+	IF(imb_block_loc(L).eq.dom_id(ib)) THEN
 	 nl=0 
 	IF( rott_loc(L).eq.1 )then
           DO I = 1, dom(ib)%ttc_i 
-       IF (dom(ib)%xc(i).gt.(nodex_loc(L)+nxl*dom(ib)%dx) .or.
-     &     dom(ib)%xc(i).lt.(nodex_loc(L)-nxl*dom(ib)%dx))GOTO 230 
+       IF (dom(ib)%xc(i).ge.(nodex_loc(L)-nxl*dom(ib)%dx) .and.
+     &     dom(ib)%xc(i).lt.(nodex_loc(L)+nxl*dom(ib)%dx)) then 
            DO J = 1, dom(ib)%ttc_j 
-       IF (dom(ib)%yc(j).gt.(nodey_loc(L)+nxl*dom(ib)%dy) .or.
-     &     dom(ib)%yc(j).lt.(nodey_loc(L)-nxl*dom(ib)%dy))GOTO 231 
+       IF (dom(ib)%yc(j).ge.(nodey_loc(L)-nxl*dom(ib)%dy) .and.
+     &     dom(ib)%yc(j).lt.(nodey_loc(L)+nxl*dom(ib)%dy)) then
             DO K = 1, dom(ib)%ttc_k 
-       IF (dom(ib)%z(k) .gt.(nodez_loc(L)+nxl*dom(ib)%dz) .or.
-     &     dom(ib)%z(k) .lt.(nodez_loc(L)-nxl*dom(ib)%dz))GOTO 232 
+       IF (dom(ib)%z(k) .ge.(nodez_loc(L)-nxl*dom(ib)%dz) .and.
+     &     dom(ib)%z(k) .lt.(nodez_loc(L)+nxl*dom(ib)%dz)) then
 	 nl=nl+1
         dh3_loc(L,nl)= dh(dom(ib)%dx,dom(ib)%dy,dom(ib)%dz,
      &  dom(ib)%XC(I),dom(ib)%YC(J),dom(ib)%Z(K)
@@ -946,11 +946,11 @@
 	if (yangcase.eq.1 .and. nl.ge.27)  GOTO 702
 	if (yangcase.eq.5 .and. nl.ge.27)  GOTO 702
  
-232         CONTINUE
+	    ENDIF
             END DO
-231         CONTINUE
+	   ENDIF
            END DO
-230         CONTINUE
+	  ENDIF
           END DO
         if (nl.eq.0) write(6,*)L,'nl is equal to 0!!'
        ELSE
@@ -960,19 +960,23 @@
   	  Enddo
 	 ENDIF
 702	continue
+	endif
       Enddo
 !$OMP end DO
 !$OMP END PARALLEL	
-	endif
-600	 CONTINUE
+	  endif
+	 ENDIF
 	Enddo !ib-loop
 !#################   SUBROUTINE calfl   #################################
 	 FX1_loc = 0.d0     ; FX2_loc = 0.d0	; FX3_loc = 0.d0
  
 	DO ib=1,nbp
-	IF (imbinblock_loc(dom_id(ib)+1).eq.0) GOTO 333	!No points within the block
+	IF (imbinblock_loc(dom_id(ib)+1).NE.0) THEN !No points within the block
+
+!$OMP parallel DEFAULT(SHARED)PRIVATE(L)
+!$OMP DO SCHEDULE(DYNAMIC,50)
         Do L = 1,maxnodeIBS
-	  IF(imb_block_loc(L).ne.dom_id(ib)) GOTO 800
+	  IF(imb_block_loc(L).EQ.dom_id(ib)) THEN              !REMOVE GOTO
 	   UIB_loc = 0.d0; VIB_loc = 0.d0; WIB_loc = 0.d0
 		M=lag_bod_loc(L) 
 
@@ -1014,9 +1018,12 @@
 	
 	endif!actuator line
 
-800	CONTINUE
-	  ENDDO                            
-333	CONTINUE    
+	   ENDIF
+	  ENDDO  
+!$OMP end DO
+!$OMP END PARALLEL
+                         
+	ENDIF
        Enddo !ib-loop	
 
 !Accumulate the forces as MDF can be performed
@@ -1027,9 +1034,11 @@
 	   ENDDO
 !!################   SUBROUTINE distfbeta   ###################
 	Do ib=1,nbp
-       if(imbinblock_loc(dom_id(ib)+1).eq.0) GOTO 606
+       if(imbinblock_loc(dom_id(ib)+1).NE.0) THEN
+!$OMP parallel DEFAULT(SHARED)PRIVATE(L)
+!$OMP DO SCHEDULE(DYNAMIC,50)
       Do L = 1,maxnodeIBS
-	IF(imb_block_loc(L).ne.dom_id(ib)) GOTO 802
+	IF(imb_block_loc(L).EQ.dom_id(ib)) THEN      !REMOVE GOTO
 	 Do nl=1,KmaxU(L)
           I=I_nr_U(L,nl) ;  J=J_nr_U(L,nl) ;  K=K_nr_U(L,nl)
           fbeta = FX1_loc(L)*dh1_loc(L,nl)*reddelta(lag_bod_loc(L))    
@@ -1045,10 +1054,11 @@
           fbeta = FX3_loc(L)*dh3_loc(L,nl)*reddelta(lag_bod_loc(L))      
           dom(ib)%WSTAR(I,J,K) = dom(ib)%WSTAR(I,J,K) + fbeta
   	 Enddo
-
-802	CONTINUE
+	ENDIF
       End do 
-606     CONTINUE
+!$OMP end DO
+!$OMP END PARALLEL
+	ENDIF
 	Enddo !ib-loop 
 	
       RETURN
