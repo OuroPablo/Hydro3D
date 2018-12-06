@@ -662,7 +662,7 @@
       Do L = 1,maxnodeIBS !investigate all the IB points
       	nl=0 ;dhtotal=0.d0
 	IF(imb_block_loc(L).EQ.dom_id(ib)) THEN !If the IB point is not in the present block
-	IF(rott_loc(L).ne.2) GOTO 700	!If the Lagrangian is dynamic:exit
+	IF(rott_loc(L).eq.2) THEN	!If the Lagrangian is dynamic:exit
 !NEIGHBOURS FOR THE U-GRID
           DO I = 1, dom(ib)%ttc_i 
        IF (dom(ib)%x(i) .ge.(nodex_loc(L)-nxl*dom(ib)%dx) .AND.
@@ -745,6 +745,7 @@
         dh3_loc(L,nl)=dh3_loc(L,nl)/dhtotal
 878	 continue                     
 	kmaxW(L)=nl 	
+	ENDIF
 	ENDIF
         Enddo
        ENDIF  
