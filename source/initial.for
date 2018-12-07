@@ -748,21 +748,22 @@
                read (700,'(i8,3F18.12)') ntime,ctime,forcn,qstpn
               close (700)
 
-	     if(pressureforce_y .eq. .true.) then				!PABLO 02/18
+	     if(pressureforce_y .eq. .true.) then				!PABLO 12/18
               open (unit=700, file='forcn_y.dat')
-		      do i=1,ntime
-		       read (700,*) 
-		      enddo
-                read (700,'(4F18.12)') dum,forcn_y,qstpn_y,dum	
+	       read (700,*) 
+		   do i=1,ntime
+                read (700,'(4F18.12)',END=200) dum,forcn_y,qstpn_y,dum
+	 	   enddo
+200	continue
               close (700)
 		    endif
 
 	     if(pressureforce_z .eq. .true.) then
               open (unit=700, file='forcn_z.dat')
-		       do i=1,ntime
-		        read (700,*) 
-		       enddo
-               read (700,'(4F18.12)') dum,forcn_z,qstpn_z,dum
+		    do i=1,ntime
+                 read (700,'(4F18.12)',END=201) dum,forcn_z,qstpn_z,dum
+		    enddo
+201	continue
               close (700)
 		    endif
 
