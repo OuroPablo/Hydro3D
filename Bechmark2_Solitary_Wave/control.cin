@@ -1,0 +1,62 @@
+======   *********  Hydro3D   -   v6.0      ******     ======
+=======================Numeric parameters===============================
+wave 0.0 		     Keyword, Ubulk
+0.0625 0.0625 0.0125	     dx,dy,dz (Grid resolutions for coarser level)
+5.0E+04 0.72 0.6 0.0034      1/vis(normRe),Prandtl(ENERGY),turb Schmidt(ENERGY+SCALAR),beta(ENERGY)
+3                            convection_scheme(1=Exp.Euler,2=AdamsBashfort,3=RK2,4=RK3)
+3                            diffusion_scheme(1=Imp.Euler,2=CrankNicholson,3=ExplicitRungeKuttaDiff)
+3                            differencing(1=2ndCDS,2=4thCDS,3=WENO)
+2                            solver(1=sip,2=multigrig)
+3 2                          multigrid step (ngrid), multigrid iteration scheme(1=GSS,2=TDMA,3=RBGSS)
+30 2 1                       multigrid maximum iteration per time step,restriction iter, prolongation iter
+T 0.0005 			     Fixed (T) or Variable (F) time step, dt
+30 0.5               	     sweeps,safety_factor (CFL)
+500 F F 500                Total number Iterations,Restart,Reinitiate mean values,n_out
+30 1.0E-6 5 5 5 20           niter,eps,nswp(1),nswp(2),nswp(3),nswp(4)
+=======================Flow boundary conditions=========================
+4			     	     West   (1= Inflow; 12=1/7th power law; 7=prescribed inflow; 8=SEM)
+2                            East   (2= NeumannBC 21= ConvectiveBC)
+3                            South  (3= Slip, 4= No-Slip)
+3                            North  (5= Periodic Condition)
+4                            Bottom (Log-laws: 61=smooth;62=rough;63=1/6th;64=1/7th;65=1/8th)
+4                            Top    
+n 0.03			     Friction coefficient ('n':manning;'k':equivalent sand)
+F 5000			     save inflow data (precursor sim.) ; number of inlets
+=======================Synthetic Eddy Method======================= 
+4					Velocity profile (same indices as West BC)
+0.1					Turbulence intensity (homogeneous)
+1000					Number SEM inlet profiles 
+=======================Modelling Options==========================
+F 10.0 20.0 0.01               time_averaging,t_start_averaging1,t_start_averaging2,noise
+F 2                          SGS-model,1=Smagorinsky,2=WALE,3=OneEqnModel,4=k-eps model (RANS)  
+1                            LMR (1=old ghost cell approach, 2=new ghost cell approach)
+2                            pl_ex (# of extra ghost planes. pl_ex=0 -> blocks have only 1 ghost layer)
+F F F                        LIMB,LROUGH,LSCALAR
+F 1 				     LPT,OpenMP threads (For IBM and LPT)
+=======================Energy boundary conditions=======================
+F 0.5  -0.5                  LENERGY,Th,Tc 
+7			     	     West   Temp Boundary Condition (5= Periodic)
+7                            East   Temp Boundary Condition (7= Adiabatic)
+7                            South  Temp Boundary Condition (8= Cold Surface)
+7                            North  Temp Boundary Condition (9= Hot Surface)
+9                            Bottom Temp Boundary Condition
+8                            Top    Temp Boundary Condition
+=======================Free surface parameters========================== 
+0.4 T T        		     Phi depth,L_LSM,reinit
+15 0.0005 0.10		     ntime_reinit,reldif_LSM,CFL_LSM
+F				     LENDS (fix phi at streamwise domain ends)
+F                            L_LSMbase 
+T F				     L_anim_phi,L_anim_grd
+1000.0 1.205 2.0E-5 3.0E-4   densl,densg,nul,nug
+0.0 0.0 -1.0                gx,gy,gz
+0.00				     slope
+=======================Results output options =======================
+F					Turbulent quantities
+F				        Tecinstantaneous: vels written each n_out.
+F					Planes outlet (coordinates set in post.for)
+F					Pressure: Inst,Mean,Fluctuations.
+F					Binary files--> needed to RESTART
+=======================Time series======================================
+1					Number of time series points
+7	10	10	10	
+
