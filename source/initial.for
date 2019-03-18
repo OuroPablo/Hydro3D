@@ -943,7 +943,8 @@
                  dom(ib)%u=0.0
                  ubw=0.0; ube=0.0; ubs=0.0; ubn=0.0; ubt=1.0; ubb=0.0
                  vb=0.0; wb=0.0
-		  else if (trim(keyword).eq.'column') then
+		  else if (trim(keyword).eq.'column'
+     &  		 .OR.trim(keyword).eq.'wave') then
                  dom(ib)%u=0.0
                  ubw=0.0; ube=0.0; ubs=0.0; ubn=0.0; ubt=0.0; ubb=0.0
                  vb=0.0; wb=0.0
@@ -1195,7 +1196,7 @@
 !.###########  Synthetic Eddy Method   ##########
           IF (bc_w.eq.8 .and. myrank.eq.0) then
 		print*,'Writing the SEM inlet'
-		call SEM  !Generate the files for the inlet turbulent field
+!		call SEM  !Generate the files for the inlet turbulent field
 		print*,'Finish the SEM inlet'
 	    ENDIF
 
