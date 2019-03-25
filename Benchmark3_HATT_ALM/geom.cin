@@ -1,0 +1,57 @@
+==========	IBM version 2.01   ===========================
+1		IBM algorithm (1-OpenMP(serial), 2-MPI(parallel))
+1		Output forces (1-yes, 2-no)
+6		Delta f.(1-phi1*,2-phi2*,3-phi3*,4-phi4*,5-phi3,6-phi4,7-C6spline
+0		Multi-Direct Forcing steps
+3       	nIBMs(# of Immersed Bs)
+========= IB #1 FRONT-MID ============
+5                       Shape: 1=Square,2=Cylinder,3=Cube,4=Sphere,5-File
+0       0.50    0.70    Length:1-Infinite; 0-finite,zini,zend
+2.3   2.7    0.225    Centre:Cx,Cy,Cz
+0.135                    Radius
+1                       cmax: Number of marker layers
+-1                       Axis of extrusion (1-x, 2-y, 3-z, -1-none)
+'ActuatorLine.pts'       File from where load the points.
+T                       Movement. F=steady; T= Rotating
+1.00                    Reduction factor
+---- Turbine application ---
+T                       Is this a turbine?
+3                       Axis turbine type:1-Vertical, 2-Horizontal, 3-AL
+0.0     0.0     0.0     Gravity centre of hydrofoils (VA)
+0.0                     Pitch Angle of hydrofoils(VA)
+3                       Number of hydrofoils wanted (1 to 4)(VA)
+11.9259                    Rotational velocity (rad/s)
+========= IB #2 ============
+2                       Shape: 1=Square,2=Cylinder,3=Cube,4=Sphere,5-File
+0       2.28    2.37    Length:1-Infinite; 0-finite,zini,zend
+2.3   2.7    0.225    Centre:Cx,Cy,Cz
+0.01                    Radius
+2                       cmax: Number of marker layers
+1                       Axis of extrusion (1-x, 2-y, 3-z, -1-none)
+'ActuatorLine.pts'       File from where load the points.
+F                       Movement. F=steady; T= Rotating
+1.00                    Reduction factor
+---- Turbine application ---
+F                       Is this a turbine?
+2                       Axis turbine type:1-Vertical, 2-Horizontal, 3-AL
+0.0     0.0     0.0     Gravity centre of hydrofoils (VA)
+0.0                     Pitch Angle of hydrofoils(VA)
+1                       Number of hydrofoils wanted (1 to 4)(VA)
+11.9259                    Rotational velocity (rad/s)
+========= IB #3 ============
+2                       Shape: 1=Square,2=Cylinder,3=Cube,4=Sphere,5-File
+0       0.242   0.445    Length:1-Infinite; 0-finite,zini,zend
+2.35   2.7    0.0    Centre:Cx,Cy,Cz
+0.015                    Radius
+2                       cmax: Number of marker layers
+3                       Axis of extrusion (1-x, 2-y, 3-z, -1-none)
+'ActuatorLine.pts'       File from where load the points.
+F                       Movement. F=steady; T= Rotating
+1.00                    Reduction factor
+---- Turbine application ---
+F                       Is this a turbine?
+2                       Axis turbine type:1-Vertical, 2-Horizontal, 3-AL
+0.0     0.0     0.0     Gravity centre of hydrofoils (VA)
+0.0                     Pitch Angle of hydrofoils(VA)
+1                       Number of hydrofoils wanted (1 to 4)(VA)
+11.9259                    Rotational velocity (rad/s)

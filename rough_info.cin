@@ -1,0 +1,5 @@
+== ROUGHNESS BED GENERATION BASED ON STOESSER (JHE) 2010
+0.0005    	!d50 (m)
+0.1  		!L_exp/L_com, for length scaling
+0.5		!sigma/d50
+

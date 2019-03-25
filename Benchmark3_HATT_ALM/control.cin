@@ -1,0 +1,96 @@
+=======================Numeric parameters===============================
+channel 0.470		     	Keyword, Ubulk
+0.01 0.01 0.01       		dx,dy,dz
+1000 1000000 0.72  0.6 0.0034 	density, Reynolds, Prandtl, turb Schmidt, beta
+0.0 0.0 0.0             	gx,gy,gz
+3                            	convection_scheme(1=Exp.Euler,2=AdamsBashfort,3=RK2,4=RK3)
+3                            	diffusion_scheme(1=Imp.Euler,2=CrankNicholson,3=ExpRK)
+2                            	differencing(1=2ndCDS,2=4thCDS,3=WENO)
+2                            	solver(1=sip,2=mg)
+1  2                          multigrid step (ngrid), multigrid iteration scheme(1=GSS,2=TDMA,3=RBGSS)
+30 2 1                       	multigrid maximum iteration per time step,restriction iter, prolongation iter
+T  0.001286				Fixed time step?, dt
+25 0.90                		sweeps,safety_factor
+80000 F F 500              	itime_end,restart,reinitmean,n_out
+20 7.0E-5 5 5 5 10           	niter,eps,nswp(1),nswp(2),nswp(3),nswp(4)
+=======================Modelling Options================================
+T 20.0 40.00 0.0               	time_averaging,t_start_averaging1,t_start_averaging2,noise
+T 2                          	SGS-model,1=Smagorinsky,2=WALE,3=OneEqnModel  
+1                          	LMR (1=old ghost cell approach, 2=new ghost cell approach)
+2                            	pl_ex (# of extra ghost planes. pl_ex=0 -> blocks have only 1 ghost layer)
+T F F                        	LIMB,LENERGY,LROUGH
+F 1			     	LPT,OpenMP threads
+0.5  -0.5                    	Th,Tc
+=======================Flow Boundary Conditions=========================
+8			     		West   BC (1= Inflow; 77= Mapping (set x in timesig.for)
+21                            East   BC (2= Outflow, 2=NeumannBC(NBC) 21= ConvectiveBC(CBC))
+6                            	South  BC (3= Slip Condition)
+6                            	North  BC (4= No-Slip Condition)
+6                           	Bottom BC (5= Periodic Condition)
+3                            	Top    BC (6= Wall functions;7=read prescribed inflow)
+=======================Synthetic Turbulence=======================
+15					Velocity profile:1=Inflow;12=1/7th PL
+0.2				Turbulence intensity
+8000					Number inlet profiles
+=======================Energy Boundary Conditions=======================
+7			     	West   Temp BC (5= Periodic)
+7                            	East   Temp BC (7= Adiabatic)
+7                            	South  Temp BC (8= Cold Surface)
+7                            	North  Temp BC (9= Hot Surface)
+9                            	Bottom Temp BC
+8                            	Top    Temp BC 
+=======================Results output options =======================
+F				Turbulent quantities
+F				Tecinstantaneous: vels written each n_out.
+F				Planes outlet (coordinates set in post.for)
+F				Pressure: Inst,Mean,Fluctuations.
+T				Binary files--> needed to RESTART
+=======================Time series=======================
+39			     	num of time series points (Fine: 78x78x66 ; C: 42x42x36
+84	20	22	18
+85	20	22	18
+86	20	22	18
+87	20	22	18
+88	20	70	33
+88	30	70	33
+88	40	70	33
+88	50	70	33
+88	60	70	33
+88	70	70	33
+89	20	70	33
+89	30	70	33
+89	40	70	33
+89	50	70	33
+89	60	70	33
+89	70	70	33
+90	20	70	33
+90	30	70	33
+90	40	70	33
+90	50	70	33
+90	60	70	33
+90	70	70	33
+91	20	70	33
+91	30	70	33
+91	40	70	33
+91	50	70	33
+91	60	70	33
+91	70	70	33
+92	20	70	33
+92	30	70	33
+92	40	70	33
+92	50	70	33
+92	60	70	33
+92	70	70	33
+93	20	70	33
+93	30	70	33
+93	40	70	33
+93	50	70	33
+93	60	70	33
+93	70	70	33
+94      20      70      33
+94      30      70      33
+94      40      70      33
+94      50      70      33
+94      60      70      33
+94      70      70      33
+
