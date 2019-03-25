@@ -68,8 +68,11 @@
 	LOGICAL,allocatable,dimension(:):: LSELFST
 	DOUBLE PRECISION,ALLOCATABLE,DIMENSION(:)::acc_ST,SUMtorque_ST	
 
-!Actuator line 07_201&:
+!Actuator line 07_2017:
 	DOUBLE PRECISION,ALLOCATABLE,DIMENSION(:)::r_act,c_act,Pit_act
+	INTEGER,ALLOCATABLE,DIMENSION(:) :: ppc_act
 	DOUBLE PRECISION::Cl_act,Cd_act
+	DOUBLE PRECISION,ALLOCATABLE :: F_X_MEAN(:,:),F_Q_MEAN(:,:)
+	DOUBLE PRECISION,ALLOCATABLE :: F_Y_MEAN(:,:),F_Z_MEAN(:,:)
 
       end module imb
