@@ -341,9 +341,21 @@
 	    end do
 	    ktop=k-1
           do j=js-1,je+1; do i=is-1,ie+1
-             dom(ib)%u(i,j,ktop) = dom(ib)%u(i,j,ktop-1)
-             dom(ib)%u(i,j,ktop+1) = 0.0
+             dom(ib)%u(i,j,ktop) = dom(ib)%u(i,j,ktop-1) 	!THIS IS A SLIP CONDITION
+             dom(ib)%u(i,j,ktop+1) = dom(ib)%u(i,j,ktop-2) 	!THIS IS A SLIP CONDITION
           enddo; enddo
+	  !pablo:	03/19
+	   	do k=ktop+2,ke	!Over the free-surface layer
+		    do j=js-1,je+1; do i=is-1,ie+1
+		       dom(ib)%u(i,j,k) = 0.0
+		    enddo; enddo
+		enddo
+	  end if
+        if (dom(ib)%z(1).ge.length) then		
+	    do k=1,ke
+           do j=js-1,je+1; do i=is-1,ie+1
+             dom(ib)%u(i,j,k) = 0.d0 !ENFORCE VELOCITIES TO ZERO IN THE AIR
+          enddo; enddo; enddo
 	  end if
 	  end if
 
@@ -377,12 +389,14 @@
 		endif
            end if
 
-           if (trim(keyword).eq.'cavity') then	
-	    do j=js-1,je+1 ; do i=is-1,ie+1
+          if (trim(keyword).eq.'cavity') then	
+		  do j=js-1,je+1
+		   do i=is-1,ie+1
+!                 dom(ib)%u(i,j,ke-ly)  = 1.d0	
                  dom(ib)%u(i,j,ke+1+ly)  = ubulk
-            end do ; end do
-	   endif
-	   
+              end do
+		 	end do
+	   	  endif
 	  end if
 
         end do
@@ -651,8 +665,14 @@
 	    ktop=k-1
           do j=js-1,je+1; do i=is-1,ie+1
             dom(ib)%v(i,j,ktop) = dom(ib)%v(i,j,ktop-1)
-            dom(ib)%v(i,j,ktop+1) = 0.0
+            dom(ib)%v(i,j,ktop+1) = dom(ib)%v(i,j,ktop-2)
 	    enddo; enddo
+	  end if
+        if (dom(ib)%z(1).ge.length) then				! PABLO 03/19
+	    do k=1,ke
+          do j=js-1,je+1; do i=is-1,ie+1
+            dom(ib)%v(i,j,k) = 0.0
+	    enddo; enddo;enddo
 	  end if
 	  end if
 
@@ -685,15 +705,16 @@
                  		dom(ib)%v(i,j,ke+1+ly)= dom(ib)%v(i,j,ke)	
 		      end do; end do
 		endif
-           end if
-	   
-           if (trim(keyword).eq.'cavity') then	
-	    do j=js-1,je+1 ; do i=is-1,ie+1
-              	dom(ib)%v(i,j,ke+1+ly)= dom(ib)%v(i,j,ke)	
-            end do ; end do
-	   endif
-	   
+           end if !bc_top.eq.4
+
+	     if (trim(keyword).eq.'cavity') then	
+		  do j=js-1,je+1 ; do i=is-1,ie+1
+                dom(ib)%v(i,j,ke+1+ly) = dom(ib)%v(i,j,ke-ly)
+          end do ; end do
+	   	 endif           
 	  end if
+
+
 
         end do
         if(diff_sch.ne.3) call boundcoef(2)
@@ -985,8 +1006,15 @@
 	    ktop=k-1
           do j=js-1,je+1; do i=is-1,ie+1
              dom(ib)%w(i,j,ktop) = dom(ib)%w(i,j,ktop-1)
-	       dom(ib)%w(i,j,ktop+1) = 0.0
+	       dom(ib)%w(i,j,ktop+1) = dom(ib)%w(i,j,ktop-2)
+!	       dom(ib)%w(i,j,ktop+1) = 0.0				!Pablo 03/19
 	    enddo; enddo
+	  end if
+        if (dom(ib)%z(1).ge.length) then
+	   do k=1,ke
+          do j=js-1,je+1; do i=is-1,ie+1
+	       dom(ib)%w(i,j,k) = 0.0
+	    enddo; enddo;enddo
 	  end if
 	  end if
         if (dom(ib)%knext.lt.0) then
@@ -1000,12 +1028,14 @@
                  dom(ib)%w(i,j,ke+1+ly)=0.0	
               end do; end do
            end if
-	   if (trim(keyword).eq.'cavity') then	
-	    do j=js-1,je+1 ; do i=is-1,ie+1
+
+	  	  if (trim(keyword).eq.'cavity') then	
+		  do j=js-1,je+1 ; do i=is-1,ie+1
                  dom(ib)%w(i,j,ke+1+ly)=0.0	
-            end do ; end do
-	   endif
+          end do ; end do
+	   	 endif         
 	  end if
+
 
         end do
         if(diff_sch.ne.3) call boundcoef(3)
