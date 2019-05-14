@@ -263,7 +263,7 @@
                  do k=kspr,kepr
                     jsp=dom(ib)%jsu-1
 			 if (L_LSM) then
-			   if (dom(ib)%phi(isp,j,k) .ge. 0.d0) then
+			   if (dom(ib)%phi(i,jsp,k) .ge. 0.d0) then
                     flwsum_loc_y=flwsum_loc_y+
      & dom(ib)%v(i,jsp,k)*dom(ib)%dx*dom(ib)%dz*
      & (dom(ib)%dens(i,jsp,k)/densl)
@@ -292,7 +292,7 @@
                  do j=jspr,jepr
                     ksp=dom(ib)%ksu-1
 			 if (L_LSM) then
-			   if (dom(ib)%phi(isp,j,k) .ge. 0.d0) then
+			   if (dom(ib)%phi(i,j,ksp) .ge. 0.d0) then
                     flwsum_loc_z=flwsum_loc_z+
      & dom(ib)%w(i,j,ksp)*dom(ib)%dx*dom(ib)%dy*
      & (dom(ib)%dens(i,j,ksp)/densl)
