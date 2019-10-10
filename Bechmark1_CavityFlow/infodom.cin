@@ -1,4 +1,12 @@
+2		1 - sub-domains description; 2 - entire domain description (no LMR)
 8   number of domains
+== Entire domain description  ===========
+1.0		Lx: streamwise length
+1.0		Ly: spanwise length
+1.0		Lz: vertical length
+2		ni: subdomains in x-direction
+2		nj:	subdomains in y-direction
+2		nk: subdomains in z-direction
 == CPU number, Local Mesh Refinement level,xini,xend,yini,yend,zini,zend===========
 0	1	0.0	0.5	0.0	0.5	0.0	0.5
 1	1	0.5	1.0	0.0	0.5	0.0	0.5
@@ -8,7 +16,3 @@
 5	1	0.5	1.0	0.0	0.5	0.5	1.0
 6	1	0.0	0.5	0.5	1.0	0.5	1.0
 7	1	0.5	1.0	0.5	1.0	0.5	1.0
-===============================================================================
-2			number of divisions in i
-2		number of divisions in j
-2		number of divisions in k 

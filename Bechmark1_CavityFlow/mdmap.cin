@@ -1,3 +1,4 @@
+2		1 - sub-domains description; 2 - entire domain description
 8 number of domains
 8 number of processors
 === CPU number, number of domains, id of domains
@@ -9,4 +10,4 @@
 5	1	5
 6	1	6
 7	1	7
- ===============================================
+===============================================
