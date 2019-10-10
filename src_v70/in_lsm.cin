@@ -1,0 +1,12 @@
+=====  Level Set Method input variables for free-surface simulations v7.0== 
+0.06  				Phi depth
+F        		    		L_LSM 
+F                             L_LSMbase 
+15 0.0005 		    		 ntime_reinit,epsilon_LSM
+0.10					CFL_LSM
+F				     LENDS (fix phi at streamwise domain ends)
+F F				     L_anim_phi,L_anim_grd
+1000.0 1.205 			densl,densg
+1.0E-6 1.8E-5   			nul,nug
+0.0 0.0 -9.81                gx,gy,gz
+0.00				     slope

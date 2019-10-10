@@ -1,0 +1,52 @@
+======   *********  Hydro3D   -   v7.0      ******     ======
+=======================Numeric parameters===============================
+channel 0.41667 		     Keyword, Ubulk
+0.003125 0.003125 0.004	     dx,dy,dz (Grid resolutions for coarser level)
+1000000      			1/vis   (normalised Reynolds number)
+3                            convection_scheme(1=Exp.Euler,2=AdamsBashfort,3=RK2,4=RK3)
+3                            diffusion_scheme(1=Imp.Euler,2=CrankNicholson,3=ExplicitRungeKuttaDiff)
+3                            differencing(1=2ndCDS,2=4thCDS,3=WENO)
+2                            solver(1=sip,2=multigrig)
+2 3                          multigrid step (ngrid), multigrid iteration scheme(1=GSS,2=TDMA,3=RBGSS)
+30 2 1                       multigrid maximum iteration per time step,restriction iter, prolongation iter
+F  0.005 			     Fixed (T) or Variable (F) time step, dt
+25 0.8               	     sweeps,safety_factor (CFL)
+400	100                	Total number Iterations,n_out
+F 	F 				Restart (ctime to 0), Reinitiate mean values only (ctime continues)
+20 1.0E-6           		niter,epsilon (convergence residual)
+=======================Flow boundary conditions=========================
+1			     	     West   (1= Inflow; 12=1/7th power law; 7=prescribed inflow; 8=SEM)
+2                            East   (2= NeumannBC 21= ConvectiveBC)
+4                            South  (3= Slip, 4= No-Slip)
+4                            North  (5= Periodic Condition)
+4                            Bottom (Log-laws: 61=smooth;62=rough;63=1/6th;64=1/7th;65=1/8th)
+3                            Top    
+n 0.03			     Friction coefficient for log-law wall function ('n':manning;'k':equivalent sand)
+F 5000			     save inflow data (precursor sim.) ; number of inlets
+=======================Synthetic Eddy Method======================= 
+12					Velocity profile (same indices as West BC)
+0.1					Turbulence intensity (homogeneous)
+=======================Modelling Options==========================
+T 0.10 5.0                   time_averaging,t_start_averaging1,t_start_averaging2
+0.01				     white noise generation in initial flow field
+T 2                          SGS-model,1=Smagorinsky,2=WALE,3=OneEqnModel,4=k-eps model (RANS)  
+2                            LMR (1=old ghost cell approach, 2=new ghost cell approach)
+2                            pl_ex (# of extra ghost planes. pl_ex=0 -> blocks have only 1 ghost layer)
+F 	                   	LIMB: Immersed Boundary Method (in_geom.cin)
+F 	                   	LLSM: Level set method (in_lsm.for)
+F 	                   	LROUGH: Bottom roughness (in_rough_info.for)
+F 	                   	LSCALAR: Scalar 	(in_energy.for)
+F 	                   	LPARMOVE: Sediment transport
+F 	                   	LENERGY: Energy equation (in_energy.for)
+F  				      LPT: Lagrangian Particle Tracking (in_LPT.cin)
+1					OpenMP threads (For IBM and LPT)
+=======================Results output options =======================
+F					Turbulent quantities
+F					Tecinstantaneous: vels written each n_out.
+F					Planes outlet (coordinates set in post.for)
+F					Pressure: Inst,Mean,Fluctuations.
+T					Binary files--> needed to RESTART
+=======================Time series======================================
+0					Number of time series points
+0 20 20 10			      Point #1 (block id, i, j, k)
+

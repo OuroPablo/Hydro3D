@@ -1,0 +1,23 @@
+==========	IBM version 2.01   ===========================
+1		Output forces (1-yes, 2-no)
+6		Delta f.(1-phi1*,2-phi2*,3-phi3*,4-phi4*,5-phi3,6-phi4
+0		Multi-Direct Forcing steps
+1         	nIBMs(# of Immersed Bs)
+========= IB #1 ============
+2                       Shape: 1=Square,2=Cylinder,3=Cube,4=Sphere,5-File
+0       0.00    0.04    Length:1-Infinite; 0-finite,zini,zend
+1.0   0.2    0.05    Centre:Cx,Cy,Cz
+0.02                    Radius
+1                       cmax: Number of marker layers
+3                       Axis of extrusion (1-x, 2-y, 3-z, -1-none)
+'Hub_M_00125.pts'       File from where load the points.
+F                       Movement. F=steady; T= Rotating
+1.00                    Reduction factor
+---- Turbine application ---
+F                       Is this a turbine?
+2                       Axis turbine type:1-Vertical, 2-Horizontal, 3-AL
+0.0     0.0     0.0     Gravity centre of hydrofoils (VA)
+0.0                     Pitch Angle of hydrofoils(VA)
+3                       Number of hydrofoils wanted (1 to 4)(VA)
+12.0                    Rotational velocity (rad/s)
+
