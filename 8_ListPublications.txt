@@ -1,0 +1,54 @@
+List of publications based on Hydro3D
+Updated on: 10/Oct/2019  by Dr Pablo Ouro
+
+2020
+
+
+2019
+
+
+2018
+•	Ouro, Stoesser, Ramirez. 2018. ASME Journal of Fluids Engineering. 
+•	Ouro, Fraga, Viti, Angeloudis, Stoesser, Gualtieri. 2018. Environmental Fluid Mechanics.
+
+2017
+•	Liu, Stoesser, Fan, Papanicolau, Tsakiris. 2017. Computers and Fluids. 
+•	McSherry, Chua, Stoesser. 2017. Journal of Hydrodynamics. 29:1—12. 
+•	Ouro, Stoesser. 2017. Computers and Fluids. 152:74—87.
+•	Ouro, Harrold, Stoesser, Bromley. 2017. Journal of Fluids and Structures. 71:78—95.
+•	Ouro. Large-Eddy Simulation of Tidal Turbines. 2017. Phd Thesis. Cardiff University.
+
+2016
+•	Cevheri, McSherry, Stoesser. 2016. International Journal of Numerical Methods in Fluids. 82:261—285. 
+•	Fraga, Stoesser, Lai, Socolofsky. 2016. Ocean Modelling. 87:27—36. 
+•	Fraga, Stoesser. 2016. Journal of Geophysical Research: Oceans. 121: 3887—3904.
+
+2015
+•	Kara, Stoesser, McSherry. 2015. Proceedings of the ICE- Engineering and Computational Mechanics. 168:59—78.
+•	Kara, Kara, Stoesser, Sturm. 2015. Journal of Hydraulic Engineering. 141: 04015019.
+•	Kara, Stoesser, Sturm, Mulahasan. 2015. Journal of Hydraulic Research. 53: 186—195.
+•	Stoesser, McSherry, Fraga. 2015. Water.
+
+2014
+•	Stoesser. 2014. Journal of Hydraulic Research. 52: 441—452.
+
+2013
+•	Kim, Stoesser, Kim. 2013. Journal of Hydraulic Research. 51: 558-568.
+•	Kim, Stoesser, Kim. 2013. Applied Mathematical Modelling. 37:8029—8050.
+
+2012
+•	Kara, Stoesser, Sturm. 2012. Journal of Hydraulic Research. 50: 482—493. 
+
+2011
+•	Bomminayuni, Stoesser. 2011. Journal of Hydraulic Engineering. 11:1347—1358. 
+
+2010
+•	Kim, Kim, Kim, Stoesser. 2010. Journal of Environmental Engineering. 136:22--31. 
+•	Stoesser, Kim, Diplas. 2010. Journal of Hydraulic Engineering. 12:1003--1017
+•	Stoesser. 2010. Journal of Hydraulic Engineering. 136:812—819.
+
+2008
+•	Stoesser, Braun, Garcia-Villalba, Rodi. 2008. Journal of Hydraulic Engineering. 134:42-55.
+•	Stoesser, Nikora. 2008. Acta Geophysica. 56:876—893.
+
+

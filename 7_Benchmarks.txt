@@ -1,0 +1,37 @@
+7. Benchmark cases:
+
+1. Lid-driven cavity flow:
+
+Description: 
+Three-dimensional lid-driven cavity flow. Reported in Ouro, Fraga, Lopez-Novoa, Stoesser. 2019. Computers and Fluids.
+
+Comparison datasets: 
+Ghia et al. 1982, Wang et al. 2013 and Ouro et al. 2019.
+
+Aims:
+(1) setup the code with different mdmap and infodom configuration, 
+(2) use Tecplot to plot 2D contours and XY-lines comparing the computed results with data available.
+
+
+
+2. Solitary Wave:
+Description: 
+Simulation of a solitary wave in a numerical wave tank. Author: Aristos Christou.
+
+Comparison datasets: 
+
+
+Aims:
+(1) learn to use level set method.
+
+
+3. Horizontal Axis Turbine with Actuator Line:
+Description: 
+Simulation of a single HAT using the ALM. Reported in Ouro et al. 2019. Springer / 2019. Journal of Fluids and Structures.
+
+Comparison datasets: 
+Stallard et al. 2013, Olzak et al. 2015.
+
+Aims:
+(1) learn to use the actuator line method.
+(2) get familiar with the outputs from ALM.
