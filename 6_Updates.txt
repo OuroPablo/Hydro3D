@@ -1,0 +1,7 @@
+List of updates on Hydro3D code:
+
+
+
+
+2019/Oct/10: v7.0 uploaded by Pablo. All changes are indicated in README.md
+
