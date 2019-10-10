@@ -1,32 +1,36 @@
 Researchers using Hydro3D and contributing to its development:
 
 University College London, UK:
-Prof Thorsten Stoesser
-Dr Razieh Halalabi
-Aristos Christou
-Lucy Massie
-Qianyu Luo
+Prof Thorsten Stoesser ()
+Dr Razieh Halalabi ()
+Aristos Christou ()
+Lucy Massie ()
+Qianyu Luo ()
 
 
 Cardiff University, UK:
-Dr Pablo Ouro
-Dr Zhihua Xie
-Filipa Adzic
-Arthur Haajali
-Eli Mitrou
-Alex Stubbs
-Santiago Martelo
+Dr Pablo Ouro (ourop@cardiff.ac.uk): developing actuator line models and 
+Dr Zhihua Xie ()
+Filipa Adzic ()
+Arthur Haajali ()
+Eli Mitrou ()
+Alex Stubbs ()
+Santiago Martelo ()
+
 
 University of Basque Country, Spain:
-Dr Unai Lopez-Novoa
+Dr Unai Lopez-Novoa (): improving load-balancing and HPC scalability.
+
 
 Tsinghua University, China:
 Prof. Hongwei Fang
-Chenwei Zhao
+Chenwei Zhao (): working on sediment transport with particles.
+
 
 Hohai University, China:
-Yiqing Long
+Yiqing Long ()
+
 
 Texas, US:
-Dr Yan Liu
+Dr Yan Liu ()
 
