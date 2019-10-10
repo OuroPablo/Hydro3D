@@ -1,0 +1,32 @@
+Researchers using Hydro3D and contributing to its development:
+
+University College London, UK:
+Prof Thorsten Stoesser
+Dr Razieh Halalabi
+Aristos Christou
+Lucy Massie
+Qianyu Luo
+
+
+Cardiff University, UK:
+Dr Pablo Ouro
+Dr Zhihua Xie
+Filipa Adzic
+Arthur Haajali
+Eli Mitrou
+Alex Stubbs
+Santiago Martelo
+
+University of Basque Country, Spain:
+Dr Unai Lopez-Novoa
+
+Tsinghua University, China:
+Prof. Hongwei Fang
+Chenwei Zhao
+
+Hohai University, China:
+Yiqing Long
+
+Texas, US:
+Dr Yan Liu
+
