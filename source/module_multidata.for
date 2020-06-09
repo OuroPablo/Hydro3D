@@ -28,11 +28,15 @@
 	   integer :: isw,iew,jsw,jew,ksw,kew
            integer :: nwork,nvars
            integer :: mximb
-           integer :: rq_m1,rq_p1,rq_m2,rq_p2,rq_m3,rq_p3
-           integer :: rq_c1m,rq_c2m,rq_c3m,rq_c4m
-           integer :: rq_c1p,rq_c2p,rq_c3p,rq_c4p
-           integer :: rq_e1m,rq_e2m,rq_e3m,rq_e4m,rq_e5m,rq_e6m
-           integer :: rq_e1p,rq_e2p,rq_e3p,rq_e4p,rq_e5p,rq_e6p
+           ! These rq_* variables are MPI requests.
+           ! The 1st value is used to track receives and the 2nd sends.
+           integer, dimension(2) :: rq_m1,rq_p1,rq_m2,rq_p2,rq_m3,rq_p3
+           integer, dimension(2) :: rq_c1m,rq_c2m,rq_c3m,rq_c4m
+           integer, dimension(2) :: rq_c1p,rq_c2p,rq_c3p,rq_c4p
+           integer, dimension(2) :: rq_e1m,rq_e2m,rq_e3m,rq_e4m,rq_e5m,
+     &rq_e6m
+           integer, dimension(2) :: rq_e1p,rq_e2p,rq_e3p,rq_e4p,rq_e5p,
+     &rq_e6p
            double precision    :: xsl,ysl,zsl,xel,yel,zel,dx,dy,dz
 	     double precision,pointer,dimension(:) :: tauw
            double precision, pointer, dimension(:,:,:) :: S,So,Sm,Stm
