@@ -28,6 +28,8 @@
 	   integer :: isw,iew,jsw,jew,ksw,kew
            integer :: nwork,nvars
            integer :: mximb
+           ! These rq_* variables are MPI requests.
+           ! The 1st value is used to track receives and the 2nd sends.
            integer, dimension(2) :: rq_m1,rq_p1,rq_m2,rq_p2,rq_m3,rq_p3
            integer, dimension(2) :: rq_c1m,rq_c2m,rq_c3m,rq_c4m
            integer, dimension(2) :: rq_c1p,rq_c2p,rq_c3p,rq_c4p
