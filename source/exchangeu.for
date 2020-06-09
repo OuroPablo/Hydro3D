@@ -389,7 +389,7 @@
                  ta=2
                  call MPI_IRECV  (dom(ib)%recvb_m1(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%iprev),dom(ib)%tg(ta),
-     &MPI_COMM_WORLD,dom(ib)%rq_m1,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_m1(1),ierr)
                  call MPI_SEND (dom(ib)%sendb_m1(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%iprev),tag,MPI_COMM_WORLD,ierr)
 
@@ -425,7 +425,7 @@
                  ta=4
                  call MPI_IRECV  (dom(ib)%recvb_m2(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%jprev),dom(ib)%tg(ta),
-     &MPI_COMM_WORLD,dom(ib)%rq_m2,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_m2(1),ierr)
                  call MPI_SEND (dom(ib)%sendb_m2(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%jprev),tag,MPI_COMM_WORLD,ierr)
 
@@ -461,7 +461,7 @@
                  ta=6
                  call MPI_IRECV  (dom(ib)%recvb_m3(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%kprev),dom(ib)%tg(ta),
-     &MPI_COMM_WORLD,dom(ib)%rq_m3,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_m3(1),ierr)
                  call MPI_SEND (dom(ib)%sendb_m3(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%kprev),tag,MPI_COMM_WORLD,ierr)
 
@@ -514,7 +514,7 @@
                  ta=1
                  call MPI_IRECV  (dom(ib)%recvb_p1(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%inext),dom(ib)%tg(ta),
-     &MPI_COMM_WORLD,dom(ib)%rq_p1,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_p1(1),ierr)
                  call MPI_SEND (dom(ib)%sendb_p1(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%inext),tag,MPI_COMM_WORLD,ierr)
 
@@ -550,7 +550,7 @@
                  ta=3
                  call MPI_IRECV  (dom(ib)%recvb_p2(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%jnext),dom(ib)%tg(ta),
-     &MPI_COMM_WORLD,dom(ib)%rq_p2,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_p2(1),ierr)
                  call MPI_SEND (dom(ib)%sendb_p2(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%jnext),tag,MPI_COMM_WORLD,ierr)
 
@@ -586,7 +586,7 @@
                  ta=5
                  call MPI_IRECV  (dom(ib)%recvb_p3(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%knext),dom(ib)%tg(ta),
-     &MPI_COMM_WORLD,dom(ib)%rq_p3,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_p3(1),ierr)
                  call MPI_SEND (dom(ib)%sendb_p3(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%knext),tag,MPI_COMM_WORLD,ierr)
 
@@ -626,7 +626,7 @@
                  tag=7*10**5+dom(ib)%corprev1
                  call MPI_IRECV  (dom(ib)%rc1m(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%corprev1),dom(ib)%tg(8),
-     &MPI_COMM_WORLD,dom(ib)%rq_c1m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_c1m(1),ierr)
                  call MPI_SEND (dom(ib)%sc1m(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%corprev1),tag,MPI_COMM_WORLD,ierr)
 
@@ -661,7 +661,7 @@
                  tag=9*10**5+dom(ib)%corprev2
                  call MPI_IRECV  (dom(ib)%rc2m(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%corprev2),dom(ib)%tg(10),
-     &MPI_COMM_WORLD,dom(ib)%rq_c2m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_c2m(1),ierr)
                  call MPI_SEND (dom(ib)%sc2m(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%corprev2),tag,MPI_COMM_WORLD,ierr)
 
@@ -696,7 +696,7 @@
                  tag=11*10**5+dom(ib)%corprev3
                  call MPI_IRECV  (dom(ib)%rc3m(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%corprev3),dom(ib)%tg(12),
-     &MPI_COMM_WORLD,dom(ib)%rq_c3m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_c3m(1),ierr)
                  call MPI_SEND (dom(ib)%sc3m(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%corprev3),tag,MPI_COMM_WORLD,ierr)
 
@@ -731,7 +731,7 @@
                  tag=13*10**5+dom(ib)%corprev4
                  call MPI_IRECV  (dom(ib)%rc4m(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%corprev4),dom(ib)%tg(14),
-     &MPI_COMM_WORLD,dom(ib)%rq_c4m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_c4m(1),ierr)
                  call MPI_SEND (dom(ib)%sc4m(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%corprev4),tag,MPI_COMM_WORLD,ierr)
 
@@ -766,7 +766,7 @@
                  tag=8*10**5+dom(ib)%cornext1
                  call MPI_IRECV  (dom(ib)%rc1p(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%cornext1),dom(ib)%tg(7),
-     &MPI_COMM_WORLD,dom(ib)%rq_c1p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_c1p(1),ierr)
                  call MPI_SEND (dom(ib)%sc1p(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%cornext1),tag,MPI_COMM_WORLD,ierr)
 
@@ -801,7 +801,7 @@
                  tag=10*10**5+dom(ib)%cornext2
                  call MPI_IRECV  (dom(ib)%rc2p(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%cornext2),dom(ib)%tg(9),
-     &MPI_COMM_WORLD,dom(ib)%rq_c2p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_c2p(1),ierr)
                  call MPI_SEND (dom(ib)%sc2p(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%cornext2),tag,MPI_COMM_WORLD,ierr)
 
@@ -836,7 +836,7 @@
                  tag=12*10**5+dom(ib)%cornext3
                  call MPI_IRECV  (dom(ib)%rc3p(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%cornext3),dom(ib)%tg(11),
-     &MPI_COMM_WORLD,dom(ib)%rq_c3p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_c3p(1),ierr)
                  call MPI_SEND (dom(ib)%sc3p(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%cornext3),tag,MPI_COMM_WORLD,ierr)
 
@@ -871,7 +871,7 @@
                  tag=14*10**5+dom(ib)%cornext4
                  call MPI_IRECV  (dom(ib)%rc4p(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%cornext4),dom(ib)%tg(13),
-     &MPI_COMM_WORLD,dom(ib)%rq_c4p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_c4p(1),ierr)
                  call MPI_SEND (dom(ib)%sc4p(1),(pl+1)**3,MPI_FLT,
      &dom_ad(dom(ib)%cornext4),tag,MPI_COMM_WORLD,ierr)
 
@@ -908,7 +908,7 @@
                  tag=15*10**5+dom(ib)%edgprev1
                  call MPI_IRECV  (dom(ib)%re1m(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgprev1),dom(ib)%tg(16),
-     &MPI_COMM_WORLD,dom(ib)%rq_e1m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e1m(1),ierr)
                  call MPI_SEND (dom(ib)%se1m(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgprev1),tag,MPI_COMM_WORLD,ierr)
 
@@ -945,7 +945,7 @@
                  tag=17*10**5+dom(ib)%edgprev2
                  call MPI_IRECV  (dom(ib)%re2m(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgprev2),dom(ib)%tg(18),
-     &MPI_COMM_WORLD,dom(ib)%rq_e2m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e2m(1),ierr)
                  call MPI_SEND (dom(ib)%se2m(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgprev2),tag,MPI_COMM_WORLD,ierr)
 
@@ -982,7 +982,7 @@
                  tag=19*10**5+dom(ib)%edgprev3
                  call MPI_IRECV  (dom(ib)%re3m(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgprev3),dom(ib)%tg(20),
-     &MPI_COMM_WORLD,dom(ib)%rq_e3m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e3m(1),ierr)
                  call MPI_SEND (dom(ib)%se3m(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgprev3),tag,MPI_COMM_WORLD,ierr)
 
@@ -1019,7 +1019,7 @@
                  tag=21*10**5+dom(ib)%edgprev4
                  call MPI_IRECV  (dom(ib)%re4m(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgprev4),dom(ib)%tg(22),
-     &MPI_COMM_WORLD,dom(ib)%rq_e4m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e4m(1),ierr)
                  call MPI_SEND (dom(ib)%se4m(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgprev4),tag,MPI_COMM_WORLD,ierr)
 
@@ -1056,7 +1056,7 @@
                  tag=23*10**5+dom(ib)%edgprev5
                  call MPI_IRECV  (dom(ib)%re5m(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgprev5),dom(ib)%tg(24),
-     &MPI_COMM_WORLD,dom(ib)%rq_e5m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e5m(1),ierr)
                  call MPI_SEND (dom(ib)%se5m(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgprev5),tag,MPI_COMM_WORLD,ierr)
 
@@ -1093,7 +1093,7 @@
                  tag=25*10**5+dom(ib)%edgprev6
                  call MPI_IRECV  (dom(ib)%re6m(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgprev6),dom(ib)%tg(26),
-     &MPI_COMM_WORLD,dom(ib)%rq_e6m,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e6m(1),ierr)
                  call MPI_SEND (dom(ib)%se6m(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgprev6),tag,MPI_COMM_WORLD,ierr)
 
@@ -1130,7 +1130,7 @@
                  tag=16*10**5+dom(ib)%edgnext1
                  call MPI_IRECV  (dom(ib)%re1p(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgnext1),dom(ib)%tg(15),
-     &MPI_COMM_WORLD,dom(ib)%rq_e1p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e1p(1),ierr)
                  call MPI_SEND (dom(ib)%se1p(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgnext1),tag,MPI_COMM_WORLD,ierr)
 
@@ -1167,7 +1167,7 @@
                  tag=18*10**5+dom(ib)%edgnext2
                  call MPI_IRECV  (dom(ib)%re2p(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgnext2),dom(ib)%tg(17),
-     &MPI_COMM_WORLD,dom(ib)%rq_e2p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e2p(1),ierr)
                  call MPI_SEND (dom(ib)%se2p(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgnext2),tag,MPI_COMM_WORLD,ierr)
 
@@ -1204,7 +1204,7 @@
                  tag=20*10**5+dom(ib)%edgnext3
                 call MPI_IRECV  (dom(ib)%re3p(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgnext3),dom(ib)%tg(19),
-     &MPI_COMM_WORLD,dom(ib)%rq_e3p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e3p(1),ierr)
                  call MPI_SEND (dom(ib)%se3p(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgnext3),tag,MPI_COMM_WORLD,ierr)
  
@@ -1241,7 +1241,7 @@
                  tag=22*10**5+dom(ib)%edgnext4
                  call MPI_IRECV  (dom(ib)%re4p(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgnext4),dom(ib)%tg(21),
-     &MPI_COMM_WORLD,dom(ib)%rq_e4p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e4p(1),ierr)
                  call MPI_SEND (dom(ib)%se4p(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgnext4),tag,MPI_COMM_WORLD,ierr)
 
@@ -1278,7 +1278,7 @@
                  tag=24*10**5+dom(ib)%edgnext5
                  call MPI_IRECV  (dom(ib)%re5p(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgnext5),dom(ib)%tg(23),
-     &MPI_COMM_WORLD,dom(ib)%rq_e5p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e5p(1),ierr)
                  call MPI_SEND (dom(ib)%se5p(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgnext5),tag,MPI_COMM_WORLD,ierr)
 
@@ -1315,7 +1315,7 @@
                  tag=26*10**5+dom(ib)%edgnext6
                  call MPI_IRECV  (dom(ib)%re6p(1),trecv,MPI_FLT,
      &dom_ad(dom(ib)%edgnext6),dom(ib)%tg(25),
-     &MPI_COMM_WORLD,dom(ib)%rq_e6p,ierr)
+     &MPI_COMM_WORLD,dom(ib)%rq_e6p(1),ierr)
                  call MPI_SEND (dom(ib)%se6p(1),tsend,MPI_FLT,
      &dom_ad(dom(ib)%edgnext6),tag,MPI_COMM_WORLD,ierr)
 
@@ -1352,7 +1352,7 @@
         if (dom(ib)%corprev1.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%corprev1)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%corprev1)) then
-                 call MPI_WAIT(dom(ib)%rq_c1m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_c1m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1; st3=1
               do pl1=st1,pl; do pl2=st2,pl; do pl3=st3,pl
@@ -1367,7 +1367,7 @@
         if (dom(ib)%corprev2.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%corprev2)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%corprev2)) then
-                 call MPI_WAIT(dom(ib)%rq_c2m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_c2m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1; st3=1
               do pl1=st1,pl; do pl2=st2,pl; do pl3=st3,pl
@@ -1382,7 +1382,7 @@
         if (dom(ib)%corprev3.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%corprev3)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%corprev3)) then
-                 call MPI_WAIT(dom(ib)%rq_c3m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_c3m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1; st3=1
 !              if(LMR.eq.2 .and.
@@ -1399,7 +1399,7 @@
         if (dom(ib)%corprev4.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%corprev4)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%corprev4)) then
-                 call MPI_WAIT(dom(ib)%rq_c4m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_c4m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1; st3=1
 !              if(LMR.eq.2 .and.
@@ -1416,7 +1416,7 @@
         if (dom(ib)%cornext1.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%cornext1)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%cornext1)) then
-                 call MPI_WAIT(dom(ib)%rq_c1p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_c1p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1; st3=1
 !              if(LMR.eq.2 .and.
@@ -1433,7 +1433,7 @@
         if (dom(ib)%cornext2.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%cornext2)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%cornext2)) then
-                 call MPI_WAIT(dom(ib)%rq_c2p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_c2p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1; st3=1
 !              if(LMR.eq.2 .and.
@@ -1450,7 +1450,7 @@
         if (dom(ib)%cornext3.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%cornext3)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%cornext3)) then
-                 call MPI_WAIT(dom(ib)%rq_c3p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_c3p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1; st3=1
               do pl1=st1,pl; do pl2=st2,pl; do pl3=st3,pl
@@ -1465,7 +1465,7 @@
         if (dom(ib)%cornext4.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%cornext4)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%cornext4)) then
-                 call MPI_WAIT(dom(ib)%rq_c4p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_c4p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1; st3=1
               do pl1=st1,pl; do pl2=st2,pl; do pl3=st3,pl
@@ -1480,7 +1480,7 @@
         if (dom(ib)%edgprev1.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgprev1)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgprev1)) then
-                 call MPI_WAIT(dom(ib)%rq_e1m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e1m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
               do pl1=st1,pl; do pl2=st2,pl; do nn=jspr,jepr
@@ -1495,7 +1495,7 @@
         if (dom(ib)%edgprev2.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgprev2)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgprev2)) then
-                 call MPI_WAIT(dom(ib)%rq_e2m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e2m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
               do pl1=st1,pl; do pl2=st2,pl; do nn=ispr,iepr
@@ -1510,7 +1510,7 @@
         if (dom(ib)%edgprev3.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgprev3)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgprev3)) then
-                 call MPI_WAIT(dom(ib)%rq_e3m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e3m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
 !              if(LMR.eq.2 .and.
@@ -1527,7 +1527,7 @@
         if (dom(ib)%edgprev4.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgprev4)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgprev4)) then
-                 call MPI_WAIT(dom(ib)%rq_e4m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e4m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
               do pl1=st1,pl; do pl2=st2,pl; do nn=ispr,iepr
@@ -1542,7 +1542,7 @@
         if (dom(ib)%edgprev5.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgprev5)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgprev5)) then
-                 call MPI_WAIT(dom(ib)%rq_e5m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e5m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
               do pl1=st1,pl; do pl2=st2,pl; do nn=kspr,kepr
@@ -1557,7 +1557,7 @@
         if (dom(ib)%edgprev6.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgprev6)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgprev6)) then
-                 call MPI_WAIT(dom(ib)%rq_e6m,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e6m(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
               do pl1=st1,pl; do pl2=st2,pl; do nn=kspr,kepr
@@ -1572,7 +1572,7 @@
         if (dom(ib)%edgnext1.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgnext1)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgnext1)) then
-                 call MPI_WAIT(dom(ib)%rq_e1p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e1p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
 !              if(LMR.eq.2 .and.
@@ -1589,7 +1589,7 @@
         if (dom(ib)%edgnext2.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgnext2)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgnext2)) then
-                 call MPI_WAIT(dom(ib)%rq_e2p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e2p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
               do pl1=st1,pl; do pl2=st2,pl; do nn=ispr,iepr
@@ -1604,7 +1604,7 @@
         if (dom(ib)%edgnext3.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgnext3)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgnext3)) then
-                 call MPI_WAIT(dom(ib)%rq_e3p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e3p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
               do pl1=st1,pl; do pl2=st2,pl; do nn=jspr,jepr
@@ -1619,7 +1619,7 @@
         if (dom(ib)%edgnext4.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgnext4)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgnext4)) then
-                 call MPI_WAIT(dom(ib)%rq_e4p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e4p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
               do pl1=st1,pl; do pl2=st2,pl; do nn=ispr,iepr
@@ -1634,7 +1634,7 @@
         if (dom(ib)%edgnext5.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgnext5)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgnext5)) then
-                 call MPI_WAIT(dom(ib)%rq_e5p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e5p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
 !              if(LMR.eq.2 .and.
@@ -1651,7 +1651,7 @@
         if (dom(ib)%edgnext6.ge.0) then
            if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%edgnext6)) then
               if (dom_ad(dom_id(ib)).ne.dom_ad(dom(ib)%edgnext6)) then
-                 call MPI_WAIT(dom(ib)%rq_e6p,MPI_STATUS_IGNORE,ierr)
+                 call MPI_WAIT(dom(ib)%rq_e6p(1),MPI_STATUS_IGNORE,ierr)
               end if
               st1=1; st2=1
 !              if(LMR.eq.2 .and.
@@ -1673,7 +1673,8 @@
               if (dom(ib)%iprev.ge.0)  then
               if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%iprev)) then
                  if (dom_ad(dom_id(ib)) .ne. dom_ad(dom(ib)%iprev)) then
-                    call MPI_WAIT(dom(ib)%rq_m1,MPI_STATUS_IGNORE,ierr)
+                    call MPI_WAIT(dom(ib)%rq_m1(1),MPI_STATUS_IGNORE,
+     &ierr)
                  end if
                  ispr=pl+1;	jspr=pl+1;	kspr=pl+1
                  iepr=ni-pl;	jepr=nj-pl;	kepr=nk-pl
@@ -1694,7 +1695,8 @@
               if (dom(ib)%jprev.ge.0)  then
               if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%jprev)) then
                  if (dom_ad(dom_id(ib)) .ne. dom_ad(dom(ib)%jprev)) then
-                    call MPI_WAIT(dom(ib)%rq_m2,MPI_STATUS_IGNORE,ierr)
+                    call MPI_WAIT(dom(ib)%rq_m2(1),MPI_STATUS_IGNORE,
+     &ierr)
                  end if
                  ispr=pl+1;	jspr=pl+1;	kspr=pl+1
                  iepr=ni-pl;	jepr=nj-pl;	kepr=nk-pl
@@ -1713,7 +1715,8 @@
               if (dom(ib)%kprev.ge.0)  then
               if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%kprev)) then
                  if (dom_ad(dom_id(ib)) .ne. dom_ad(dom(ib)%kprev)) then
-                    call MPI_WAIT(dom(ib)%rq_m3,MPI_STATUS_IGNORE,ierr)
+                    call MPI_WAIT(dom(ib)%rq_m3(1),MPI_STATUS_IGNORE,
+     &ierr)
                  end if
                  ispr=pl+1;	jspr=pl+1;	kspr=pl+1
                  iepr=ni-pl;	jepr=nj-pl;	kepr=nk-pl
@@ -1736,7 +1739,8 @@
               if (dom(ib)%inext.ge.0)  then
               if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%inext)) then
                  if (dom_ad(dom_id(ib)) .ne. dom_ad(dom(ib)%inext)) then
-                    call MPI_WAIT(dom(ib)%rq_p1,MPI_STATUS_IGNORE,ierr)
+                    call MPI_WAIT(dom(ib)%rq_p1(1),MPI_STATUS_IGNORE,
+     &ierr)
                  end if
                  ispr=pl+1;	jspr=pl+1;	kspr=pl+1
                  iepr=ni-pl;	jepr=nj-pl;	kepr=nk-pl
@@ -1757,7 +1761,8 @@
               if (dom(ib)%jnext.ge.0)  then
               if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%jnext)) then
                  if (dom_ad(dom_id(ib)) .ne. dom_ad(dom(ib)%jnext)) then
-                    call MPI_WAIT(dom(ib)%rq_p2,MPI_STATUS_IGNORE,ierr)
+                    call MPI_WAIT(dom(ib)%rq_p2(1),MPI_STATUS_IGNORE,
+     &ierr)
                  end if
                  ispr=pl+1;	jspr=pl+1;	kspr=pl+1
                  iepr=ni-pl;	jepr=nj-pl;	kepr=nk-pl
@@ -1776,7 +1781,8 @@
               if (dom(ib)%knext.ge.0)  then
               if(rdiv(dom_id(ib)).ne.rdiv(dom(ib)%knext)) then
                  if (dom_ad(dom_id(ib)) .ne. dom_ad(dom(ib)%knext)) then
-                    call MPI_WAIT(dom(ib)%rq_p3,MPI_STATUS_IGNORE,ierr)
+                    call MPI_WAIT(dom(ib)%rq_p3(1),MPI_STATUS_IGNORE,
+     &ierr)
                  end if
                  ispr=pl+1;	jspr=pl+1;	kspr=pl+1
                  iepr=ni-pl;	jepr=nj-pl;	kepr=nk-pl
