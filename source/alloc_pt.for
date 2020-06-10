@@ -53,7 +53,7 @@
 
 50	continue
 
-		if (out_pt(l).eq..false.) then
+		if (.NOT. out_pt(l)) then
       		xpold(l-out_cnt)=xp_pt(l)
            		ypold(l-out_cnt)=yp_pt(l)
            		zpold(l-out_cnt)=zp_pt(l)

@@ -155,7 +155,7 @@
          gridfile='geom_ActL_'//TRIM(ADJUSTL(char_block))//'.dat'
          open (unit=2, file=gridfile)
 !----      Load the file and proceed to interpolate     ----------
- 	open(unit=1, name=filepoints(numIB))
+ 	open(unit=1, file=filepoints(numIB))
 	   read(1,*)n_act
 	   read(1,*)
 	   allocate(r_in(n_act),c_in(n_act),Pit_in(n_act))

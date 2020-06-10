@@ -829,9 +829,12 @@
          gridfile='geom_body_'//TRIM(ADJUSTL(char_block2))//'.dat'
          open (unit=2, file=gridfile)
 !----      Load the file and proceed to interpolate     ----------
- 	open(unit=1, name=filepoints(numIB))
-	if (ibturbine(numIB).eq..true.)read(1,*)nin,nscatter(numIB)	!Mesh points	
-	if (ibturbine(numIB).eq..false.)read(1,*)nin	!Mesh points	
+ 	open(unit=1, file=filepoints(numIB))
+	if (ibturbine(numIB)) then
+           read(1,*)nin,nscatter(numIB)	!Mesh points
+        else
+           read(1,*)nin         !Mesh points
+        end if
 
 	select case(axis(numIB))			!Brunho2015
 	CASE (1) !-------------------------------------------
@@ -932,7 +935,7 @@
    		ENDDO
 	end select
  !--------Local and global coordinates  --------------------------------
-	IF (ibturbine(numIB).eq..true.) then	!if body is a turbine 
+	IF (ibturbine(numIB)) then	!if body is a turbine 
 	   an=pitch(numIB)*PI/180.d0	   !Angle of attack in radians
 	   do i=1,nin*nlay		   !Rotate the body.
 	    nodex(numIB,i)=nodex(numIB,i)-xaero(numIB)
@@ -1131,7 +1134,7 @@
  	endif
 
 !- Distinguish between turbines (HA and VA) and non-turbines --------------
-	IF (ibturbine(numIB) 	.eq..true.) then		! Turbine
+	IF (ibturbine(numIB)) then		! Turbine
 !-------------------------------------------------------------------	
 	IF (turax(numIB).eq.1) then	! Vertical Axis 
        do L=1,nodes(numIB)
@@ -1168,7 +1171,7 @@
 	ENDIF !Turbine
 !--------------------------------------------------
 !_----- NON-TURBINE BODY which is moving   ------- 
-       IF (ibturbine(numIB) .eq. .false.) then		! Non-Turbine
+       IF (.NOT. ibturbine(numIB)) then		! Non-Turbine
 	do L=1,nodes(numIB)
 	 nodex(numIB,L)=
      &   R0(numIB,L)*DSIN(rads(numIB)+alpha0(numIB,L))+Cxor(numIB)
@@ -1211,7 +1214,7 @@
 
       IF (myrank.ne.master) goto 797
 
-	IF (ibturbine(numIB).ne..true. .and. turax(numIB).ne.1) RETURN !Only works for VAT
+	IF ((.NOT. ibturbine(numIB)) .and. turax(numIB).ne.1) RETURN !Only works for VAT
 	 	K=nodes(numIB)/imbnumber(numIB) 	! Vertical Axis Turbine
          GT1=301  
          write(char_block,'(I8)') itime

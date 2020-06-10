@@ -82,7 +82,7 @@ C#############################################################
             end do
 	enddo
 
-       elseif (LRESTART.eq..false.) then
+       elseif (.NOT. LRESTART) then
 	  	write(202,*) 'First release:',np,'new particles. Total:',np
 
 		if (random) then

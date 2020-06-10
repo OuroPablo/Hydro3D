@@ -135,7 +135,7 @@
 
         dt=dt1
 
-	  if (variTS.eq. .true.) dt=dtinit
+	  if (variTS) dt=dtinit
 
        dtsum=dtsum+dt
 

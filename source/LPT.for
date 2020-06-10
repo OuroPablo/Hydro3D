@@ -453,7 +453,7 @@
 !	Fpv(l) = -(Fav(l) + Fdv(l) + Flv(l))
 !	Fpw(l) = -(Faw(l) + Fdw(l) + Flw(l))
 
-	if (DF.eq..false.) then
+	if (.NOT. DF) then
 
       Fpu(l) = -(3.0d0*((ui_pt(l)-uoi_pt(l))/dt)	
      &  -(3.0d0/(2.0d0*dp_loc(l)))*Cd*sqrt(a**2.d0+b**2.d0+c**2.d0)*a  
@@ -479,7 +479,7 @@
 !     	write(myrank+700,*)'Fp',Fpu(l),Fpv(l),Fpw(l)
 
 !$OMP CRITICAL
-	if (PSIcell.eq..true.) then
+	if (PSIcell) then
 
            	dom(ib)%ustar(ipu(l),jp(l),kp(l)) = 
      &	dom(ib)%ustar(ipu(l),jp(l),kp(l)) + dt * alfapr * Fpu(l) *

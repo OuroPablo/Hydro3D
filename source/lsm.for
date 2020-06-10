@@ -498,7 +498,7 @@
       bool=.false.
       it=0
 
-      do while (bool.eq..false.)
+      do while (.NOT. bool)
 !
 ! 1st step
 !     

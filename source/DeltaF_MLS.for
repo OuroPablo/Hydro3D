@@ -462,12 +462,12 @@
 !######################################################################
         use mpi
 	implicit none
+        INTEGER, intent(in):: neignum,MAXNEIG
 	Double precision, intent(in) :: hx,hy,hz,kwx1,kwx2,kwy1
 	Double precision, intent(in) :: kwy2,kwz1,kwz2
 	Double precision, intent(in) :: difx(MAXNEIG)
 	Double precision, intent(in) ::dify(MAXNEIG)
 	Double precision, intent(in) :: difz(MAXNEIG)
-	INTEGER, intent(in):: neignum,MAXNEIG
         INTEGER :: I,J
         Double precision:: cero, coef,cx1,cx2,cy1,cy2,cz1,cz2,PI
         Double precision:: dmx,dmy,dmz,Wx,Wy,Wz,dWx,dWy,dWz
