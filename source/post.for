@@ -169,7 +169,7 @@
 	  itotk=1 	; ntotk=totk/itotk+1
 
 
-	IF(L_LSM.EQ..FALSE.) THEN
+	IF(.NOT. L_LSM) THEN
         write (88,*) 'title = turb'
         write (88,*)'variables=x,y,z,U,V,W,UM,VM,WM'
 !     &, ,'uuM,vvM,wwM,uvM,uwM,vwM'
@@ -232,7 +232,7 @@
      &dom(ib)%vwm(i+1,j,k+1)  +dom(ib)%vwm(i,j+1,k+1)+
      &dom(ib)%vwm(i+1,j+1,k+1))
 
-	IF(L_LSM.EQ..FALSE.) THEN
+	IF(.NOT. L_LSM) THEN
           write (88,88) dom(ib)%x(i),dom(ib)%y(j),
      &  dom(ib)%z(k),u_cn,v_cn,w_cn,um_cn,vm_cn,wm_cn
 !     &  ,uum_cn,vvm_cn,wwm_cn,uvml,uwml,vwml

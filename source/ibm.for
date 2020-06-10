@@ -72,7 +72,7 @@
 		read (1,*) imbnumber(M)
 		read (1,*) radsin(M)		
 
-	   if(ibturbine(M).EQ..FALSE.) then
+	   if(.NOT. ibturbine(M)) then
 	    xaero(M)=0.d0 ; yaero(M)=0.d0 ; zaero(M)=0.d0 	
 	    pitch(M)=0.d0 ; turax(M)=1    ; imbnumber(M)=1
 	    LSELFST(M)=.false.
@@ -81,11 +81,11 @@
 	    xaero(M)=0.d0 ; yaero(M)=0.d0 ; zaero(M)=0.d0 		
 	    pitch(M)=0.d0 ; imbnumber(M)=1 ; LSELFST(M)=.false.	
 	   endif
-	   if (rotating(M).eq..FALSE.) radsin(M)=0.d0
-	   if (LSELFST(M).eq..TRUE.) radsin(M)=0.d0
+	   if (.NOT. rotating(M)) radsin(M)=0.d0
+	   if (LSELFST(M)) radsin(M)=0.d0
 
 !Actuator line:
-	   if(ibturbine(M).EQ..true. .and. turax(M).eq.3 .and. M.eq.1) then
+	   if(ibturbine(M) .and. turax(M).eq.3 .and. M.eq.1) then
 	    allocate(r_act(5000),c_act(5000),Pit_act(5000))
 	    r_act=0.d0 ; c_act=0.d0 ;Pit_act=0.d0 
 	   endif
@@ -154,7 +154,7 @@
 	DO M=1,bodynum
 	 DO i=1,imbnumber(M)
              L=L+1 ; forcefilej=399+L
-	 IF (ibturbine(M).eq..true.) then !Rotating VATT
+	 IF (ibturbine(M)) then !Rotating VATT
          write(char_block,'(i2)') L
          strlen=LEN(TRIM(ADJUSTL(char_block)))
          char_block=REPEAT('0',(2-strlen))//TRIM(ADJUSTL(char_block))
@@ -184,7 +184,7 @@
 	write(6,'(a,f12.4,a)')'     Angle step : ',anst,'deg/iteration'
 	    ENDIF
 	  ENDIF
-	 IF(LSELFST(M).eq..true.) then
+	 IF(LSELFST(M)) then
 	   forcefilej=5452+M
          write(char_block,'(i2)') M
          strlen=LEN(TRIM(ADJUSTL(char_block)))
@@ -196,7 +196,7 @@
 	 ENDIF !TURBINE
 363	CONTINUE	!09-2017
 
-	 IF (ibturbine(M).eq..false. .and. rotating(L).eq..false. ) then !Rotating VATT
+	 IF ((.NOT. ibturbine(M)) .and. (.NOT. rotating(L))) then !Rotating VATT
          write(char_block,'(i2)') L
          strlen=LEN(TRIM(ADJUSTL(char_block)))
          char_block=REPEAT('0',(2-strlen))//TRIM(ADJUSTL(char_block))
@@ -212,7 +212,7 @@
          if(imb_shape(M).eq.4) then
          gridfile='F_Sph_'//TRIM(ADJUSTL(char_block))//'.dat'
      	 endif     
-         if(imb_shape(M).eq.5 .and. rotating(L).eq..false.) then
+         if(imb_shape(M).eq.5 .and. (.NOT. rotating(L))) then
          gridfile='F_Bod_'//TRIM(ADJUSTL(char_block))//'.dat'
      	 endif 	      
          if(imb_shape(M).ge.11) then
@@ -222,8 +222,8 @@
            write (forcefilej,*)'Variables=CTIME,Fx,Fy,Fz'
 	 ENDIF
 
-        if(imb_shape(M).eq.5 .and. ibturbine(M).eq..false.) then
-	   if(rotating(L).eq..true.) then
+        if(imb_shape(M).eq.5 .and. (.NOT. ibturbine(M))) then
+	   if(rotating(L)) then
            write(char_block,'(i2)') L
            strlen=LEN(TRIM(ADJUSTL(char_block)))
            char_block=REPEAT('0',(2-strlen))//TRIM(ADJUSTL(char_block))
@@ -275,7 +275,7 @@
          open (unit=2, file=gridfile)
 	write(2,*)'variables=x,y,z,al0,R0'
 
-	 if(ibturbine(M).eq..false.) then  !Not a turbine
+	 if(.NOT. ibturbine(M)) then  !Not a turbine
 
            do L=1,nodes(M)    			!!!!!assumed z-axis...
             alpha0(M,L)=datan(nodexlocal(M,L)/nodeylocal(M,L))
@@ -459,8 +459,8 @@
 	     CALL ActuatorLine_Initial			!Turbine via Actuator Line model
 	endif
 
-	 IF (imb_shape(K).eq.5 .and. rotating(K).eq..TRUE.) then
-	   if(ibturbine(K).eq..true.) then
+	 IF (imb_shape(K).eq.5 .and. rotating(K)) then
+	   if(ibturbine(K)) then
 	      IF(LSELFST(K)) then  				!Self-starting 07_2017
 			call move_ST 
 		ELSE
@@ -470,7 +470,7 @@
        	rads(K)=-radsin(K)*3.1416D0/180.D0*DSIN(0.1983*CTIME)	!Pitching airfoil case
 	   endif
 		 call imb_moved(K) 		 		!In shapes.for
-	   if(ibturbine(K).eq..true. .and. turax(K).eq.1)
+	   if(ibturbine(K) .and. turax(K).eq.1)
      &	 call imb_moved_shades(K)  			 !In shapes.for
 	 ENDIF
 	Enddo	
@@ -507,7 +507,7 @@
 !		call imb_averaging !Calculate mean IB force values
 	if (mod(itime,2) .eq. 0 .and. ibm_out_forces.eq.1) then
 		call caldrag	!Output of IB forces
-		if(ibturbine(1).eq. .TRUE. .and. turax(1).eq.2) then
+		if(ibturbine(1) .and. turax(1).eq.2) then
 		 call imb_FEM		!Structural loadings of all blades
 		 call imb_FEM_oneblade !Structural loadings for a single blade divided into sections
 	      endif
@@ -608,7 +608,7 @@
 		R0_loc(ii)=R0(M,L) ; alpha0_loc(ii)=alpha0(M,L)
 	     ENDIF 
 		rott_loc(ii)=1 	!Moving Lagrangian
-		IF(rotating(M).eq..false.)rott_loc(ii)=2  	!Static Lagrangian
+		IF(.NOT. rotating(M))rott_loc(ii)=2  	!Static Lagrangian
 	  ENDDO
 	 Enddo
 	ENDIF !master
@@ -984,7 +984,7 @@
  	  IF (imb_shape(M).eq.5 .and. turax(M).eq.3) THEN	!Pablo 09/2017
 		call ActuatorLine(M,L,ib)
 	  ELSE
-	   IF(ibturbine(M).eq..TRUE.) then 			!If it is a turbine
+	   IF(ibturbine(M)) then 			!If it is a turbine
 	    IF (turax(M).eq.1) then			! Vertical Axis Turbine
 	      UIB_loc=-radsin(M)*R0_loc(L)*dcos(rads(M)+alpha0_loc(L))
 	      VIB_loc=-radsin(M)*R0_loc(L)*dsin(rads(M)+alpha0_loc(L))
@@ -996,8 +996,8 @@
 	      WIB_loc=-radsin(M)*R0_loc(L)*dsin(rads(M)+alpha0_loc(L))
 	    ENDIF	     
 	   ENDIF
-	    IF (ibturbine(M).eq..FALSE. .AND. imb_shape(M).eq.5
-     &			.and. rotating(M).eq..true.) then	! from file but moving
+	    IF ((.NOT. ibturbine(M)) .AND. imb_shape(M).eq.5
+     &			.and. rotating(M)) then	! from file but moving
 !	      UIB_loc=-radsin(M)*R0_loc(L)*dcos(rads(M)+alpha0_loc(L)) !Pitching airfoil simu
 !	      VIB_loc=-radsin(M)*R0_loc(L)*dsin(rads(M)+alpha0_loc(L))
 !	      WIB_loc= 0.d0	
@@ -1111,7 +1111,7 @@
 
 	J=0
 	Do M = 1,bodynum
-	IF (imb_shape(M).eq.5 .and. rotating(M).eq..true.) then
+	IF (imb_shape(M).eq.5 .and. rotating(M)) then
 	  Do iii=1,imbnumber(M)
 		J=J+1 ; forcefilej=399+J    
  	  fx_loc = 0.d0   ; fy_loc = 0.d0 ; fz_loc = 0.d0 
@@ -1154,7 +1154,7 @@
      &	/dt*dxm*dym*dzm
 	 end do
 
-	If(LSELFST(M).eq..true.) SUMtorque_ST(M) = SUMtorque_ST(M)+ ft_loc !Self-starting 07_2017
+	If(LSELFST(M)) SUMtorque_ST(M) = SUMtorque_ST(M)+ ft_loc !Self-starting 07_2017
 
          write(forcefilej,88)alpharads,fx_loc,fy_loc
      &	,ft_loc,ft2_loc,fn_loc,fn2_loc,M_loc
@@ -1233,7 +1233,7 @@
 
 	Do M=1,bodynum
 	
-	IF (rotating(M).eq..TRUE.) then
+	IF (rotating(M)) then
          write(ibnum,'(I2)') M
            strlen2=LEN(TRIM(ADJUSTL(ibnum)))
            ibnum=REPEAT('0',(2-strlen2))//TRIM(ADJUSTL(ibnum))

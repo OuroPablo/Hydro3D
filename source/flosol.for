@@ -29,7 +29,7 @@
         alfabc = 1
         alfapr = 1.0
 
-        if (LRESTART.eq..false.) cnt_pt = 1 
+        if (.NOT. LRESTART) cnt_pt = 1 
 
         numfile1=1002; numfile2=1003; numfile3=1004
 	  numfile4=1005; numfile5=1006
@@ -75,7 +75,7 @@
            ctime=ctime+dt  ;  ntime = ntime + 1
 
 !Reading inflow data, bc_west = 7
-	   if (read_inflow.eq..true.) then  
+	   if (read_inflow) then  
            		if (ireadinlet.eq.ITMAX_PI.and.iaddinlet.eq.1) then
 				iaddinlet=-1
           		elseif (ireadinlet.eq.1.and.iaddinlet.eq.-1) then
@@ -227,28 +227,28 @@
 	  if (ctime.ge.t_start_averaging1) call timesig				
 
 !Write outflow planes
-	  if ((save_inflow.eq..true.) .and. itime.ge.itime_start)
+	  if ((save_inflow) .and. itime.ge.itime_start)
      &     call write_inflow		       !set itime since when you'd like to write inflow planes
 	 
 !Write results in tecplot format 
        IF ((mod(itime,n_out).eq.0).and.(itime.ge.itime_start)) then
-	  	  IF (LTURB.EQ..TRUE.)     call tec_turb(itime)
-	  	  IF (LINST.EQ..TRUE.)     call tec_instant(itime)
-	 	  IF (LPLAN.EQ..TRUE.)     call tec_inst_plane(itime)
-	 	  IF (LTECP.EQ..TRUE.)     call tecplot_p(itime)
-	  	  IF (LTECBIN.EQ..TRUE.)   call tecbin(itime)
-		  IF (L_LSM.EQ..TRUE.)     call tecplot_phi(itime)
-		  IF (L_LSMbase.EQ..TRUE.) call tecplot_phi(itime)	!!
-	 	  IF (LENERGY.EQ..TRUE.)   call tecplot_T(itime)	!!
-	 	  IF (LSCALAR.EQ..TRUE.)   call tecplot_S(itime)	!!
+	  	  IF (LTURB)     call tec_turb(itime)
+	  	  IF (LINST)     call tec_instant(itime)
+	 	  IF (LPLAN)     call tec_inst_plane(itime)
+	 	  IF (LTECP)     call tecplot_p(itime)
+	  	  IF (LTECBIN)   call tecbin(itime)
+		  IF (L_LSM)     call tecplot_phi(itime)
+		  IF (L_LSMbase) call tecplot_phi(itime)	!!
+	 	  IF (LENERGY)   call tecplot_T(itime)	!!
+	 	  IF (LSCALAR)   call tecplot_S(itime)	!!
 !File containing information needed for restarting
-	  	  IF (LTECBIN.EQ..TRUE.)   then
+	  	  IF (LTECBIN)   then
          open (unit=101, file='final_ctime.dat')
          IF(myrank.eq.0) write(101,'(i8,3F15.6)')ntime,ctime,forcn,qstpn
          close(101)
 		  ENDIF
 !Lagrangian Particle Tracking final checks
-	       if (LPT.eq..TRUE. .AND. myrank.eq.0) then          			
+	       if (LPT .AND. myrank.eq.0) then          			
 	    		open(30,file='final_particle.dat')
 	   	 	write(30,*) np
 	    		write(30,*) cnt_pt
@@ -303,12 +303,12 @@
 	  close(203) !worktime.dat
 !Output final results:
         if (mod(itime,n_out).ne.0) then
-	  	  IF (LTURB.EQ..TRUE.)   call tec_turb(itime)
-	  	  IF (LTECBIN.EQ..TRUE.) call tecbin(itime)
-		  IF (L_LSM.EQ..TRUE.)   call tecplot_phi(itime)
-		  IF (L_LSMbase.EQ..TRUE.)   call tecplot_phi(itime)	!!
-	 	  IF (LENERGY.EQ..TRUE.)   call tecplot_T(itime)	!!
-	 	  IF (LSCALAR.EQ..TRUE.)   call tecplot_S(itime)	!!
+	  	  IF (LTURB)   call tec_turb(itime)
+	  	  IF (LTECBIN) call tecbin(itime)
+		  IF (L_LSM)   call tecplot_phi(itime)
+		  IF (L_LSMbase)   call tecplot_phi(itime)	!!
+	 	  IF (LENERGY)   call tecplot_T(itime)	!!
+	 	  IF (LSCALAR)   call tecplot_S(itime)	!!
 		  if (ctime.ge.t_start_averaging2)  call timesig
            open (unit=101, file='final_ctime.dat')
            if(myrank.eq.0) write (101,'(i8,3F15.6)') 

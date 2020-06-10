@@ -150,7 +150,7 @@
 	   stop
 	  endif
 
-	  if (L_anim_phi .and. L_LSM.eq..FALSE.) then
+	  if (L_anim_phi .and. (.NOT. L_LSM)) then
 	   if (myrank.eq.0) then
           print*,'Error: L_anim_phi cannot be true if L_LSM is false!'
 	   endif
@@ -748,7 +748,7 @@
                read (700,'(i8,3F18.12)') ntime,ctime,forcn,qstpn
               close (700)
 
-	     if(pressureforce_y .eq. .true.) then				!PABLO 12/18
+	     if(pressureforce_y) then				!PABLO 12/18
               open (unit=700, file='forcn_y.dat')
 	       read (700,*) 
 		   do i=1,ntime
@@ -758,7 +758,7 @@
               close (700)
 		    endif
 
-	     if(pressureforce_z .eq. .true.) then
+	     if(pressureforce_z) then
               open (unit=700, file='forcn_z.dat')
 		    do i=1,ntime
                  read (700,'(4F18.12)',END=201) dum,forcn_z,qstpn_z,dum
@@ -816,7 +816,7 @@
               end do
               close (700)
 
-		IF (LENERGY.EQ..TRUE. )then
+		IF (LENERGY)then
               gf='tecplot_T'//trim(adjustl(chb1))//'.plt'
               open (unit=700, file=gf,status='old')
               read (700) 
@@ -833,7 +833,7 @@
               end do
               close (700)
 		ENDIF
-		IF (LSCALAR.EQ..TRUE. )then
+		IF (LSCALAR)then
               gf='tecplot_S'//trim(adjustl(chb1))//'.plt'
               open (unit=700, file=gf,status='old')
               read (700) 

@@ -228,7 +228,7 @@
            jspr=pl+1; jepr=dom(ib)%ttc_j-pl
            kspr=pl+1; kepr=dom(ib)%ttc_k-pl
 
-	if(pressureforce  .eq. .true.) then
+	if(pressureforce) then
            if(dom(ib)%iprev.lt.0) then						!west
               do j=jspr,jepr
                  do k=kspr,kepr
@@ -257,7 +257,7 @@
            end if
 	endif
 
-	if(pressureforce_y .eq. .true.) then
+	if(pressureforce_y) then
            if(dom(ib)%jprev.lt.0) then
               do i=ispr,iepr
                  do k=kspr,kepr
@@ -286,7 +286,7 @@
            end if
 	endif
 
-	if(pressureforce_z  .eq. .true.) then
+	if(pressureforce_z) then
            if(dom(ib)%kprev.lt.0) then
               do i=ispr,iepr
                  do j=jspr,jepr
@@ -317,21 +317,21 @@
         end do
 
 !.....sum massflux and area over all processors
-	if(pressureforce .eq. .true.) then
+	if(pressureforce) then
         sndbuffer(1)   = flwsum_loc    ;  sndbuffer(2)   = A_loc
         call MPI_ALLREDUCE(sndbuffer,recbuffer,2,
      &                   MPI_FLT,MPI_SUM,MPI_COMM_WORLD,ierr)
         flwsum   = recbuffer(1)  ;   A        = recbuffer(2)
 	endif
 
-	if(pressureforce_y .eq. .true.) then
+	if(pressureforce_y) then
         sndbuffer_y(1) = flwsum_loc_y  ;  sndbuffer_y(2) = A_loc_y
         call MPI_ALLREDUCE(sndbuffer_y,recbuffer_y,2,
      &                   MPI_FLT,MPI_SUM,MPI_COMM_WORLD,ierr)
         flwsum_y = recbuffer_y(1)  ;   A_y    = recbuffer_y(2)
 	endif
 
-	if(pressureforce_z .eq. .true.) then
+	if(pressureforce_z) then
         sndbuffer_z(1) = flwsum_loc_z  ;  sndbuffer_z(2) = A_loc_z
         call MPI_ALLREDUCE(sndbuffer_z,recbuffer_z,2,
      &                   MPI_FLT,MPI_SUM,MPI_COMM_WORLD,ierr)
@@ -340,36 +340,36 @@
 
 ! --- Calculate and store forcing term --------------------------------
         fakfor  = 0.3
-	 if(pressureforce .eq. .true.)    qstpp   = flwsum/A
-	 if(pressureforce_y .eq. .true.)  qstpp_y = flwsum_y/A_y
-	 if(pressureforce_z .eq. .true.)  qstpp_z = flwsum_z/A_z
+	 if(pressureforce)    qstpp   = flwsum/A
+	 if(pressureforce_y)  qstpp_y = flwsum_y/A_y
+	 if(pressureforce_z)  qstpp_z = flwsum_z/A_z
 
 ! Whatever the flow is lost, is added back again
 ! 	  Q(t)=Q(t-1)+0.3?  *(U(0) +U(t-1)-2*U(t))/dt
-	 if(pressureforce .eq. .true.)  then
+	 if(pressureforce)  then
         forcn=forcn+fakfor*(qzero+qstpn-2.0*qstpp)/dt
         qstpn = qstpp
 	 endif
 
-	 if(pressureforce_y .eq. .true.)  then
+	 if(pressureforce_y)  then
         forcn_y=forcn_y+fakfor*(0.0+qstpn_y-2.0*qstpp_y)/dt
         qstpn_y = qstpp_y
 	 endif
 
-	 if(pressureforce_z .eq. .true.)  then
+	 if(pressureforce_z)  then
         forcn_z=forcn_z+fakfor*(0.0+qstpn_z-2.0*qstpp_z)/dt
         qstpn_z = qstpp_z
 	 endif
 
 !Write out values in the 3 directions:
         if(myrank.eq.0) then
-	 if(pressureforce .eq. .true.)  
+	 if(pressureforce)  
      & 	write (numfile1,'(4F18.12)') ctime,forcn,qstpn,flwsum
 
-	 if(pressureforce_y .eq. .true.)  
+	 if(pressureforce_y)  
      & 	write (numfile4,'(4F18.12)') ctime,forcn_y,qstpn_y,flwsum_y
 
-	 if(pressureforce_z .eq. .true.)  
+	 if(pressureforce_z)  
      & 	write (numfile5,'(4F18.12)') ctime,forcn_z,qstpn_z,flwsum_z
 	 endif
 
@@ -480,8 +480,8 @@
  3000   continue
 
         if(rmax.gt.10.d0) then
-           if(myrank.eq.0) write(numfile,*),'BIG RMAX!! STOP!!!!!',rmax
-           write(6,*),'BIG RMAX!! STOP!!!!!!!!',rmax
+           if(myrank.eq.0) write(numfile,*) 'BIG RMAX!! STOP!!!!!',rmax
+           write(6,*) 'BIG RMAX!! STOP!!!!!!!!',rmax
 
            if(myrank.eq.0) then
               open (unit=101, file='final_ctime.dat')

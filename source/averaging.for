@@ -158,7 +158,7 @@
                   dom(ib)%Ttm(i,j,k)=dom(ib)%facm2(i,j,k)*
      & dom(ib)%Ttm(i,j,k)+dom(ib)%facp2(i,j,k)*TfTf
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	IF(LSCALAR.EQ..TRUE.) THEN
+	IF(LSCALAR) THEN
                   dom(ib)%Sm(i,j,k)=dom(ib)%facm1(i,j,k)*
      & dom(ib)%Sm(i,j,k)+dom(ib)%facp1(i,j,k)*dom(ib)%S(i,j,k)
                   SfSf=(dom(ib)%S(i,j,k)-dom(ib)%Sm(i,j,k))*
@@ -196,7 +196,7 @@
      & dom(ib)%Ttm(i,j,k)+dom(ib)%facp2(i,j,k)*TfTf
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-	IF(LSCALAR.EQ..TRUE.) THEN
+	IF(LSCALAR) THEN
                   dom(ib)%Sm(i,j,k)=dom(ib)%facm1(i,j,k)*
      & dom(ib)%Sm(i,j,k)+dom(ib)%facp1(i,j,k)*dom(ib)%S(i,j,k)
                   SfSf=(dom(ib)%S(i,j,k)-dom(ib)%Sm(i,j,k))*
